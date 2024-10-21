@@ -87,6 +87,7 @@ class QrService {
         return null;
       }
     }
+    return null;
   }
 
   // download

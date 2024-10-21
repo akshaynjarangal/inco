@@ -28,19 +28,19 @@ class OTPScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Form(
             key: formkey,
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Enter OTP',
                     style: TextStyle(
                         color: appThemeColor,
                         fontSize: 28,
                         fontWeight: FontWeight.bold),
                   ),
-                  Text('Check your Inbox and enter the OTP below'),
+                  const Text('Check your Inbox and enter the OTP below'),
                   SizedBox(
                     height: mediaqry.height * 0.08,
                   ),

@@ -41,7 +41,7 @@ class RegistrationScreen extends StatelessWidget {
                 SizedBox(
                   height: mediaqry.height * 0.05,
                 ),
-                Text(
+                const Text(
                   'Sign Up',
                   style: TextStyle(
                       color: appThemeColor,
@@ -90,25 +90,25 @@ class RegistrationScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: const Color.fromARGB(255, 23, 22,
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 23, 22,
                                     22)), // Red border when not focused
                           ),
                           labelText: 'District',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: appThemeColor), // Red border color
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color:
                                     appThemeColor), // Red border when not focused
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color:
                                     appThemeColor), // Red border when focused
                           ),
@@ -275,7 +275,7 @@ class RegistrationScreen extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => LoginScreen()));
                     },
-                    child: Text('Back to Login'))
+                    child: const Text('Back to Login'))
               ],
             ),
           ),

@@ -12,8 +12,10 @@ import 'package:provider/provider.dart';
 class ProductListScreen extends StatelessWidget {
   TextEditingController itemNAmeController = TextEditingController();
   TextEditingController pointController = TextEditingController();
-  var _formkey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
   final ImagePicker picker = ImagePicker();
+
+  ProductListScreen({super.key});
   // XFile? image;
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class ProductListScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.black12,
                       ),
-                      margin: EdgeInsets.all(5),
+                      margin: const EdgeInsets.all(5),
                       height: 100,
                       width: 150,
                     ),
@@ -63,7 +65,7 @@ class ProductListScreen extends StatelessWidget {
                       child: ListTile(
                         title: Text(
                           value.productList[index].point.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.green,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
@@ -71,7 +73,7 @@ class ProductListScreen extends StatelessWidget {
                         subtitle: Text(value.productList[index].productInfo!),
                         trailing:
                             value.isDeleting && value.deletingIndex == index
-                                ? SizedBox(
+                                ? const SizedBox(
                                     height: 35,
                                     width: 35,
                                     child: CircularProgressIndicator(
@@ -84,7 +86,7 @@ class ProductListScreen extends StatelessWidget {
                                       await value.deleteProduct(
                                           value.productList[index].id);
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.delete,
                                       color: Colors.red,
                                     )),
@@ -114,7 +116,7 @@ class ProductListScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Item Name:",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
@@ -130,7 +132,7 @@ class ProductListScreen extends StatelessWidget {
                               return null;
                             },
                           ),
-                          Text(
+                          const Text(
                             "Add Points:",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
@@ -146,12 +148,12 @@ class ProductListScreen extends StatelessWidget {
                               return null;
                             },
                           ),
-                          Text(
+                          const Text(
                             "Upload Photo:",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           // Square TextField for uploading file without dotted border
                           Container(
                             width: double.infinity,
@@ -180,7 +182,7 @@ class ProductListScreen extends StatelessWidget {
                                         fit: BoxFit
                                             .fill, // Fit the image in the box
                                       )
-                                    : Column(
+                                    : const Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
@@ -195,10 +197,10 @@ class ProductListScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                           Center(
                             child: dialogvalue.isLoading
-                                ? CircularProgressIndicator(
+                                ? const CircularProgressIndicator(
                                     color: appThemeColor,
                                   )
                                 : CustomeButton(
@@ -209,7 +211,7 @@ class ProductListScreen extends StatelessWidget {
                                           // Show a message if no image is selected
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            SnackBar(
+                                            const SnackBar(
                                               content: Text(
                                                   "Please select an image"),
                                             ),
@@ -218,7 +220,7 @@ class ProductListScreen extends StatelessWidget {
                                         }
                                         // If the form is valid and an image is selected, proceed
                                         dialogvalue.addProduct(
-                                            await dialogvalue.selectedImage!,
+                                            dialogvalue.selectedImage!,
                                             pointController.text,
                                             itemNAmeController.text,
                                             contextt);
@@ -241,7 +243,7 @@ class ProductListScreen extends StatelessWidget {
           );
         },
         backgroundColor: appThemeColor,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -9,6 +9,8 @@ import 'package:inco/state/profileProvider.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavigationBarScreen extends StatefulWidget {
+  const BottomNavigationBarScreen({super.key});
+
   @override
   _BottomNavigationBarScreenState createState() =>
       _BottomNavigationBarScreenState();
@@ -21,8 +23,8 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   // List of pages to display
   final List<Widget> _pages = [
     UserHomeScreen(),
-    HistoryScreen(),
-    MyAccountPage(),
+    const HistoryScreen(),
+    const MyAccountPage(),
   ];
 
   @override
@@ -54,7 +56,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
         },
         selectedItemColor: Colors.red, // Color for the selected item
         unselectedItemColor: Colors.grey, // Color for the unselected items
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',

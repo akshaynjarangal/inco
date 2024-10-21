@@ -26,9 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigation() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    AuthService.userType = await prefs.getString('usertype');
+    AuthService.userType = prefs.getString('usertype');
     print(AuthService.userType);
     if (AuthService.userType == null) {
       Navigator.pushReplacement(
@@ -45,12 +45,12 @@ class _SplashScreenState extends State<SplashScreen> {
         await profileprovider.fetchProfile();
         await productprovider.fetchProducts();
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (ctxt) => BottomNavigationBarScreen()));
+            MaterialPageRoute(builder: (ctxt) => const BottomNavigationBarScreen()));
       } else {
         await Provider.of<ProductProvider>(context, listen: false)
             .getProgressAndCount();
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (ctxt) => AdminHomeScreen()));
+            context, MaterialPageRoute(builder: (ctxt) => const AdminHomeScreen()));
       }
     }
   }
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Container(
+      child: SizedBox(
         height: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 // fit: BoxFit.cover,
               ),
             ),
-            Container(
+            SizedBox(
               height: 55,
               width: MediaQuery.of(context).size.width * 0.7,
               child: SvgPicture.asset(

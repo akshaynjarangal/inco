@@ -6,6 +6,8 @@ import 'package:inco/state/bannerProvider.dart';
 import 'package:provider/provider.dart';
 
 class NotificationPage extends StatefulWidget {
+  const NotificationPage({super.key});
+
   @override
   State<NotificationPage> createState() => _NotificationPageState();
 }
@@ -71,7 +73,7 @@ class NotificationTile extends StatelessWidget {
         ),
         title: Text(
           data.message,
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
         ),
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -81,7 +83,7 @@ class NotificationTile extends StatelessWidget {
                       DateTime.now().toString().substring(0, 10)
                   ? 'Today'
                   : data.createdAt.toString().substring(0, 10),
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
             ),
           ],
         ),

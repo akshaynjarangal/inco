@@ -13,13 +13,13 @@ import 'package:inco/state/userProvider.dart';
 import 'package:provider/provider.dart';
 
 class AdminHomeScreen extends StatelessWidget {
-  AdminHomeScreen({super.key});
+  const AdminHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     var mediaqry = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: CustomeDrawer(),
+      drawer: const CustomeDrawer(),
       body: Consumer<ProductProvider>(
         builder: (context, value, child) => NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -31,13 +31,13 @@ class AdminHomeScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (ctxt) => QrGenerationScreen()));
+                                builder: (ctxt) => const QrGenerationScreen()));
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.qr_code_2_outlined,
                         size: 30,
                       )),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   )
                 ],
@@ -45,14 +45,14 @@ class AdminHomeScreen extends StatelessWidget {
                     onPressed: () {
                       Scaffold.of(context).openDrawer();
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.account_circle_outlined,
                       size: 37,
                     )),
                 pinned: true,
                 floating: true,
                 backgroundColor: appThemeColor,
-                title: Text('INCO ADMIN',
+                title: const Text('INCO ADMIN',
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w700,
@@ -68,7 +68,7 @@ class AdminHomeScreen extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -82,21 +82,21 @@ class AdminHomeScreen extends StatelessWidget {
                               Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (ctxt) => UsersListScreen()))
+                                          builder: (ctxt) => const UsersListScreen()))
                                   .then((_) {
                                 value.getProgressAndCount();
                               });
                             },
                             child: Card(
                               elevation: 5,
-                              child: Container(
+                              child: SizedBox(
                                 height: mediaqry.height * 0.16,
                                 width: mediaqry.width * 0.43,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Users',
                                       style: TextStyle(
                                           fontSize: 20,
@@ -105,11 +105,11 @@ class AdminHomeScreen extends StatelessWidget {
                                     Text(
                                       value.progressdata!.activeUsers
                                           .toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 35,
                                           fontWeight: FontWeight.w800),
                                     ),
-                                    SizedBox()
+                                    const SizedBox()
                                   ],
                                 ),
                               ),
@@ -125,20 +125,20 @@ class AdminHomeScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (ctxt) =>
-                                          RedeemRequestScreen())).then((_) {
+                                          const RedeemRequestScreen())).then((_) {
                                 value.getProgressAndCount();
                               });
                             },
                             child: Card(
                               elevation: 5,
-                              child: Container(
+                              child: SizedBox(
                                 height: mediaqry.height * 0.16,
                                 width: mediaqry.width * 0.43,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Requests',
                                       style: TextStyle(
                                           fontSize: 20,
@@ -148,11 +148,11 @@ class AdminHomeScreen extends StatelessWidget {
                                     Text(
                                       value.progressdata!.redeemedRequests
                                           .toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 35,
                                           fontWeight: FontWeight.w800),
                                     ),
-                                    SizedBox()
+                                    const SizedBox()
                                   ],
                                 ),
                               ),
@@ -160,7 +160,7 @@ class AdminHomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -182,14 +182,14 @@ class AdminHomeScreen extends StatelessWidget {
                             },
                             child: Card(
                               elevation: 5,
-                              child: Container(
+                              child: SizedBox(
                                 height: mediaqry.height * 0.16,
                                 width: mediaqry.width * 0.43,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Products',
                                       style: TextStyle(
                                           fontSize: 20,
@@ -197,11 +197,11 @@ class AdminHomeScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       value.progressdata!.products.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 35,
                                           fontWeight: FontWeight.w800),
                                     ),
-                                    SizedBox()
+                                    const SizedBox()
                                   ],
                                 ),
                               ),
@@ -216,20 +216,20 @@ class AdminHomeScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (ctxt) =>
-                                          PointRequestScreen())).then((_) {
+                                          const PointRequestScreen())).then((_) {
                                 value.getProgressAndCount();
                               });
                             },
                             child: Card(
                               elevation: 5,
-                              child: Container(
+                              child: SizedBox(
                                 height: mediaqry.height * 0.16,
                                 width: mediaqry.width * 0.43,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    Container(
+                                    const SizedBox(
                                       width: 100,
                                       child: Text(
                                         'Reports',
@@ -241,11 +241,11 @@ class AdminHomeScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       value.progressdata!.complaints.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 35,
                                           fontWeight: FontWeight.w800),
                                     ),
-                                    SizedBox()
+                                    const SizedBox()
                                   ],
                                 ),
                               ),
@@ -253,8 +253,8 @@ class AdminHomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
-                      Align(
+                      const SizedBox(height: 20),
+                      const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           '  Order Progress',
@@ -284,13 +284,13 @@ class AdminHomeScreen extends StatelessWidget {
                                     ),
                                     fit: BoxFit.fill),
                               ),
-                              margin: EdgeInsets.all(5),
+                              margin: const EdgeInsets.all(5),
                               height: 100,
                               width: 150,
                             ),
                             Expanded(
                               child: ListTile(
-                                title: Container(
+                                title: SizedBox(
                                   height: mediaqry.height * 0.08,
                                   child: Text(product.productInfo),
                                 ),
@@ -324,7 +324,7 @@ class AdminHomeScreen extends StatelessWidget {
       BuildContext context, double height, double width, heading, point) {
     return Card(
         elevation: 5,
-        child: Container(
+        child: SizedBox(
           height: height,
           width: width,
           child: Column(
@@ -332,14 +332,14 @@ class AdminHomeScreen extends StatelessWidget {
             children: [
               Text(
                 heading,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 point,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ));

@@ -4,7 +4,6 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/core/widgets/customeSlider.dart';
@@ -37,7 +36,7 @@ class UserHomeScreen extends StatelessWidget {
     List<ProductModel>? productprovider =
         Provider.of<ProductProvider>(context, listen: false).productList;
     return Scaffold(
-      drawer: CustomeDrawer(),
+      drawer: const CustomeDrawer(),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -45,7 +44,7 @@ class UserHomeScreen extends StatelessWidget {
               pinned: true,
               floating: true,
               backgroundColor: appThemeColor,
-              title: Text('INCO',
+              title: const Text('INCO',
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w700,
@@ -59,9 +58,9 @@ class UserHomeScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NotificationPage()));
+                              builder: (context) => const NotificationPage()));
                     },
-                    icon: Icon(Icons.notifications_none))
+                    icon: const Icon(Icons.notifications_none))
               ],
             ),
           ];
@@ -80,7 +79,7 @@ class UserHomeScreen extends StatelessWidget {
                         current: _current,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Consumer<BannerProvider>(
                       builder: (context, value, child) => Card(
                         color: appThemeColor,
@@ -155,11 +154,11 @@ class UserHomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     InkWell(
                       onTap: () async {
                         AdminService adminserv = AdminService();
-                        var options = ScanOptions(
+                        var options = const ScanOptions(
                             android: AndroidOptions(useAutoFocus: true));
                         ScanResult result = await BarcodeScanner.scan(
                           options: options,
@@ -183,17 +182,17 @@ class UserHomeScreen extends StatelessWidget {
                             ),
                             title: Center(
                               child: status
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(8.0),
                                       child: Icon(
                                         Icons.star,
-                                        color: const Color.fromARGB(
+                                        color: Color.fromARGB(
                                             255, 244, 222, 22),
                                         size: 60,
                                       ),
                                     )
-                                  : Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                  : const Padding(
+                                      padding: EdgeInsets.all(8.0),
                                       child: Icon(
                                         Icons.error,
                                         size: 60,
@@ -201,18 +200,18 @@ class UserHomeScreen extends StatelessWidget {
                                       ),
                                     ),
                             ),
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16,
                                 vertical:
                                     10), // Reduce padding inside the dialog
-                            content: Container(
+                            content: SizedBox(
                               width: 250, // Set a fixed width for the content
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     '${res.data['message']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600),
                                     textAlign:
@@ -221,7 +220,7 @@ class UserHomeScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            actionsPadding: EdgeInsets.only(
+                            actionsPadding: const EdgeInsets.only(
                                 bottom: 10,
                                 left: 10,
                                 right: 10), // Adjust padding for the actions
@@ -236,12 +235,12 @@ class UserHomeScreen extends StatelessWidget {
                                           await userService.pointRepportSent(
                                               qrCodeResult, context);
                                         },
-                                        child: Text('REPORT'),
                                         color: const Color.fromARGB(
                                             255, 225, 208, 52),
+                                        child: const Text('REPORT'),
                                       ),
                                     ),
-                                  if (reportstatus) SizedBox(width: 5),
+                                  if (reportstatus) const SizedBox(width: 5),
                                   Expanded(
                                     child: MaterialButton(
                                       onPressed: () async {
@@ -256,8 +255,8 @@ class UserHomeScreen extends StatelessWidget {
                                         Navigator.of(contextt)
                                             .pop(); // Close dialog on OK press
                                       },
-                                      child: Text('OK'),
                                       color: appThemeColor,
+                                      child: const Text('OK'),
                                     ),
                                   ),
                                 ],
@@ -276,8 +275,8 @@ class UserHomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,7 +309,7 @@ class UserHomeScreen extends StatelessWidget {
                               width: 100,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                image: DecorationImage(
+                                image: const DecorationImage(
                                     image:
                                         AssetImage('assets/images/qrcode.png')),
                               ),
@@ -319,8 +318,8 @@ class UserHomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Align(
+                    const SizedBox(height: 10),
+                    const Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         '  Gifts for you',
@@ -339,7 +338,7 @@ class UserHomeScreen extends StatelessWidget {
 
                       return InkWell(
                         onTap: () async {
-                          UserModel? user = await Provider.of<ProfileProvider>(
+                          UserModel? user = Provider.of<ProfileProvider>(
                                   context,
                                   listen: false)
                               .currentUserProfileData;
@@ -381,7 +380,7 @@ class UserHomeScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(5),
                                   color: Colors.black12,
                                 ),
-                                margin: EdgeInsets.all(5),
+                                margin: const EdgeInsets.all(5),
                                 height: 100,
                                 width: 150,
                               ),
@@ -389,14 +388,14 @@ class UserHomeScreen extends StatelessWidget {
                                 child: ListTile(
                                   title: Text(
                                     product.point!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.green,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   subtitle: Text(
                                     product.productInfo!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   ),

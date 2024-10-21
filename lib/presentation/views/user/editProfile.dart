@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
-import 'package:inco/core/utlities/validations.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/core/widgets/customeTextfield.dart';
 import 'package:inco/data/local/districtList.dart';
@@ -9,7 +8,7 @@ import 'package:inco/state/profileProvider.dart';
 import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({super.key});
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -112,25 +111,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     decoration: InputDecoration(
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                            color: const Color.fromARGB(255, 23, 22,
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 23, 22,
                                 22)), // Red border when not focused
                       ),
                       labelText: 'District',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: appThemeColor), // Red border color
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color:
                                 appThemeColor), // Red border when not focused
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: appThemeColor), // Red border when focused
                       ),
                     ),
@@ -168,7 +167,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 }
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomeButton(

@@ -36,7 +36,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appThemeColor,
-        title: Text('My Account',
+        title: const Text('My Account',
             style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w700,
@@ -47,16 +47,17 @@ class _MyAccountPageState extends State<MyAccountPage> {
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: IconButton(
-                icon: Icon(Icons.edit, color: Colors.black),
+                icon: const Icon(Icons.edit, color: Colors.black),
                 onPressed: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EditProfileScreen())).then((_) {
+                          builder: (context) => const EditProfileScreen())).then((_) {
                     // Refetch the profile when returning from the edit screen
-                    if (AuthService.userType != 'admin')
+                    if (AuthService.userType != 'admin') {
                       Provider.of<ProfileProvider>(context, listen: false)
                           .fetchProfile();
+                    }
                   });
                 },
               ),
@@ -70,11 +71,11 @@ class _MyAccountPageState extends State<MyAccountPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 60),
+                const SizedBox(height: 60),
                 Consumer<ProfileProvider>(
                   builder: (context, value, child) {
                     if (value.currentUserProfileData == null) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
                     return Center(
                       child: Stack(
@@ -84,7 +85,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                             radius: 50,
                             backgroundImage:
                                 value.currentUserProfileData!.profile == null
-                                    ? AssetImage('assets/images/person.jpg')
+                                    ? const AssetImage('assets/images/person.jpg')
                                     : NetworkImage(
                                         '${Api.baseUrl}storage/${value.currentUserProfileData!.profile!}'
                                             .replaceAll('api', ''),
@@ -117,7 +118,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                                                   }
                                                   Navigator.pop(context);
                                                 },
-                                                child: Container(
+                                                child: const SizedBox(
                                                   width: 200,
                                                   child: ListTile(
                                                     leading: Icon(Icons
@@ -126,7 +127,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                                                   ),
                                                 ),
                                               ),
-                                              Divider(),
+                                              const Divider(),
                                               GestureDetector(
                                                 onTap: () async {
                                                   var imageee =
@@ -139,7 +140,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                                                   }
                                                   Navigator.pop(context);
                                                 },
-                                                child: Container(
+                                                child: const SizedBox(
                                                   width: 200,
                                                   child: ListTile(
                                                     leading: Icon(Icons
@@ -153,7 +154,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                                         ),
                                       );
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.refresh,
                                       color: Colors.black,
                                       size: 20,
@@ -165,7 +166,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                     );
                   },
                 ),
-                SizedBox(height: 60),
+                const SizedBox(height: 60),
                 Consumer<ProfileProvider>(
                   builder: (context, value, child) {
                     if (value.currentUserProfileData == null) {
@@ -180,16 +181,16 @@ class _MyAccountPageState extends State<MyAccountPage> {
                         children: [
                           buildInfoRow(
                               'Name    ', value.currentUserProfileData!.name!),
-                          Divider(color: Colors.black12, height: 1),
+                          const Divider(color: Colors.black12, height: 1),
                           buildInfoRow('Email     ',
                               value.currentUserProfileData!.email!),
-                          Divider(color: Colors.black12, height: 1),
+                          const Divider(color: Colors.black12, height: 1),
                           buildInfoRow(
                               'Phone   ', value.currentUserProfileData!.phone!),
-                          Divider(color: Colors.black12, height: 1),
+                          const Divider(color: Colors.black12, height: 1),
                           buildInfoRow('Address ',
                               '${value.currentUserProfileData!.place},${value.currentUserProfileData!.city},${value.currentUserProfileData!.district},'),
-                          SizedBox(height: 35),
+                          const SizedBox(height: 35),
                           if (AuthService.userType != 'admin')
                             InkWell(
                               onTap: () {
@@ -202,17 +203,17 @@ class _MyAccountPageState extends State<MyAccountPage> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.grey[350],
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(10),
                                     bottomRight: Radius.circular(10),
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(14.0),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(14.0),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: const [
+                                    children: [
                                       Text(
                                         "Change Password",
                                         style: TextStyle(
@@ -242,7 +243,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.grey[350],
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10),
                                     ),
@@ -259,7 +260,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                                                   'active'
                                               ? 'Activate'
                                               : 'Suspend Account',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.w700),
                                         ),
                                         // Icon(Icons.arrow_forward_ios, size: 12),
@@ -292,7 +293,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
             width: 100, // Adjust width to your preference
             child: Text(
               '$label :',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
             ),
           ),
           Expanded(
@@ -300,7 +301,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
               alignment: Alignment.centerLeft,
               child: Text(
                 value,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
               ),
             ),
           ),

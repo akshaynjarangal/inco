@@ -6,7 +6,7 @@ class CustomCarousel extends StatelessWidget {
   final CarouselSliderController carouselController;
   final ValueNotifier<int> current;
 
-  CustomCarousel({
+  const CustomCarousel({super.key, 
     required this.items,
     required this.carouselController,
     required this.current,
@@ -22,7 +22,7 @@ class CustomCarousel extends StatelessWidget {
           child: CarouselSlider(
             items: items
                 .map(
-                  (item) => Container(
+                  (item) => SizedBox(
                     width: mediaqry.width, // Full width of the screen
                     child: Image.network(
                       item,
@@ -40,8 +40,8 @@ class CustomCarousel extends StatelessWidget {
               enableInfiniteScroll: true,
               reverse: false,
               autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
               autoPlayCurve: Curves.fastOutSlowIn,
               enlargeCenterPage: false,
               onPageChanged: (index, reason) {
@@ -65,7 +65,7 @@ class CustomCarousel extends StatelessWidget {
                     width: 10.0,
                     height: 10.0,
                     margin:
-                        EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+                        const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: (Theme.of(context).brightness == Brightness.dark

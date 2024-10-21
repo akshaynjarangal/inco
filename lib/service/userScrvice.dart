@@ -190,6 +190,7 @@ class UserService {
     } else {
       print('No token found, please login.');
     }
+    return null;
   }
 
 // changePassword
@@ -198,7 +199,7 @@ class UserService {
     if (token != null) {
       try {
         Response response = await dio.post(
-          '${Api.changePassword}', // API endpoint for updating profile image
+          Api.changePassword, // API endpoint for updating profile image
           data: {'current_password': oldPassword, 'new_password': newPassword},
           options: Options(
             headers: {
@@ -230,6 +231,7 @@ class UserService {
     } else {
       print('No token found, please login.');
     }
+    return null;
   }
 
   // getPoint
@@ -259,5 +261,6 @@ class UserService {
     } else {
       print('No token found, please login.');
     }
+    return null;
   }
 }

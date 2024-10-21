@@ -3,7 +3,6 @@ import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/data/model/adminRedeemedHistoryModel.dart';
 import 'package:inco/presentation/views/admin/deliveryStatus.dart';
-import 'package:inco/presentation/views/admin/requestDetails.dart';
 import 'package:inco/state/productProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +53,7 @@ class RedeemRequestScreen extends StatelessWidget {
                             ),
                             fit: BoxFit.fill),
                       ),
-                      margin: EdgeInsets.all(5),
+                      margin: const EdgeInsets.all(5),
                       height: 80,
                       width: 120,
                     ),
@@ -69,11 +68,11 @@ class RedeemRequestScreen extends StatelessWidget {
                         },
                         title: Text(
                           request.name!,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(request.address!),
-                        trailing: Icon(
+                        trailing: const Icon(
                           Icons.arrow_forward_ios_outlined,
                           size: 15,
                         ),

@@ -5,12 +5,11 @@ import 'package:inco/core/widgets/customeTextfield.dart';
 import 'package:inco/data/local/districtList.dart';
 import 'package:inco/data/model/deliveryAddressModel.dart';
 import 'package:inco/data/model/productModel.dart';
-import 'package:inco/presentation/views/user/confirmOrderScreen.dart';
 import 'package:inco/state/productProvider.dart';
 import 'package:provider/provider.dart';
 
 class ChangeAddressScreen extends StatefulWidget {
-  ChangeAddressScreen(
+  const ChangeAddressScreen(
       {super.key, required this.address, required this.product});
   final DeliveryAddress address;
   final ProductModel product;
@@ -115,25 +114,25 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
                         decoration: InputDecoration(
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: const Color.fromARGB(255, 23, 22,
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 23, 22,
                                     22)), // Red border when not focused
                           ),
                           labelText: 'District',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: appThemeColor), // Red border color
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color:
                                     appThemeColor), // Red border when not focused
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color:
                                     appThemeColor), // Red border when focused
                           ),
@@ -185,7 +184,7 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
                     }
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 CustomeButton(

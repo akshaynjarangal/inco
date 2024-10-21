@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/core/widgets/customeTextfield.dart';
-import 'package:inco/data/local/districtList.dart';
 import 'package:inco/state/profileProvider.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
@@ -130,7 +129,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomeButton(
