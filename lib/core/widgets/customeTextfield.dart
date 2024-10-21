@@ -39,13 +39,13 @@ class CustomeTextfield extends StatelessWidget {
           ),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: appThemeColor)),
+              borderSide: const BorderSide(color: appThemeColor)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: appThemeColor)),
+              borderSide: const BorderSide(color: appThemeColor)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: appThemeColor)),
+              borderSide: const BorderSide(color: appThemeColor)),
         ),
       ),
     );

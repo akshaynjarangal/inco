@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:inco/core/constent/colors.dart';
 
 class HelpScreen extends StatelessWidget {
@@ -35,7 +34,7 @@ class HelpScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 50), // Space below the AppBar
+              const SizedBox(height: 50), // Space below the AppBar
               Row(
                 crossAxisAlignment: CrossAxisAlignment
                     .center, // Aligning avatar and text in the same vertical line
@@ -45,13 +44,13 @@ class HelpScreen extends StatelessWidget {
                     height: 100,
                     width: 100,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 50,
                         width: 200,
                         child: SvgPicture.asset(
@@ -67,8 +66,8 @@ class HelpScreen extends StatelessWidget {
                       //     fontSize: 24,
                       //   ),
                       // ),
-                      SizedBox(height: 3),
-                      Text(
+                      const SizedBox(height: 3),
+                      const Text(
                         "Plot No:20, SIDCO Industrial Park,\nMuchikunnu, Koyilandi, Kerala -\n673307",
                         style: TextStyle(
                           fontSize: 13,
@@ -79,22 +78,22 @@ class HelpScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Text(
+              const Text(
                   "You can keep in touch with us through the below\ncontacts. Our team will reach out to you at the earliest.",
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
                   )),
-              SizedBox(height: 80),
-              Padding(
-                padding: const EdgeInsets.only(
+              const SizedBox(height: 80),
+              const Padding(
+                padding: EdgeInsets.only(
                   left: 25,
                 ),
                 child: Row(
-                  children: const [
+                  children: [
                     Icon(Icons.phone_in_talk_outlined),
                     SizedBox(width: 50),
                     Text('+91 9207193005, \n+91 9656193005',
@@ -103,11 +102,11 @@ class HelpScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 50),
-              Padding(
-                padding: const EdgeInsets.only(left: 25),
+              const SizedBox(height: 50),
+              const Padding(
+                padding: EdgeInsets.only(left: 25),
                 child: Row(
-                  children: const [
+                  children: [
                     Icon(Icons.phone),
                     SizedBox(width: 50),
                     Text('0496 2690033',
@@ -116,13 +115,13 @@ class HelpScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 25),
+              const Padding(
+                padding: EdgeInsets.only(left: 25),
                 child: Row(
-                  children: const [
+                  children: [
                     Icon(Icons.email),
                     SizedBox(width: 50),
                     Text('inducomponentsinco@gmail.com',

@@ -48,7 +48,7 @@ class ProductHistoryScreen extends StatelessWidget {
                           ),
                           fit: BoxFit.fill),
                     ),
-                    margin: EdgeInsets.all(5),
+                    margin: const EdgeInsets.all(5),
                     height: 80,
                     width: 120,
                   ),
@@ -56,7 +56,7 @@ class ProductHistoryScreen extends StatelessWidget {
                     child: ListTile(
                       title: Text(
                         product.productInfo!,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Column(

@@ -47,7 +47,7 @@ class ManegeBannerScreen extends StatelessWidget {
                   items: value.bannerImages,
                   carouselController: _controller,
                   current: _current),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Expanded(
@@ -85,7 +85,7 @@ class ManegeBannerScreen extends StatelessWidget {
                                         value.bannerDatas![index].id);
                                   }
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.edit_square,
                                   color: Colors.white,
                                 ),
@@ -110,7 +110,7 @@ class ManegeBannerScreen extends StatelessWidget {
                                         );
                                       },
                                     ),
-                                    duration: Duration(
+                                    duration: const Duration(
                                         seconds:
                                             5), // Duration the SnackBar will be displayed
                                   );
@@ -131,7 +131,7 @@ class ManegeBannerScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               CustomeButton(
@@ -146,7 +146,7 @@ class ManegeBannerScreen extends StatelessWidget {
                   height: 40,
                   width: mediaqry.width / 2,
                   text: 'Add more'),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
             ],

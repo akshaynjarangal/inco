@@ -36,7 +36,7 @@ class CustomeDrawer extends StatelessWidget {
                                     '${Api.baseUrl}storage/${user.profile}'
                                         .replaceAll('api', ''),
                                   )
-                                : AssetImage('assets/images/person.jpg'),
+                                : const AssetImage('assets/images/person.jpg'),
                           ),
                         if (AuthService.userType != 'admin')
                           Expanded(
@@ -55,8 +55,8 @@ class CustomeDrawer extends StatelessWidget {
                       ],
                     ),
                   )
-                : DrawerHeader(
-                    child: Container(
+                : const DrawerHeader(
+                    child: SizedBox(
                         width: double.maxFinite,
                         child: Center(child: Text('Admin')))),
           ),
@@ -64,11 +64,11 @@ class CustomeDrawer extends StatelessWidget {
             ListTile(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (ctxt) => HelpScreen()));
+                    MaterialPageRoute(builder: (ctxt) => const HelpScreen()));
               },
-              title: Text('Help'),
-              leading: Icon(Icons.help_outline_outlined),
-              trailing: Icon(
+              title: const Text('Help'),
+              leading: const Icon(Icons.help_outline_outlined),
+              trailing: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 15,
               ),
@@ -84,9 +84,9 @@ class CustomeDrawer extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (ctxt) => ChangePasswordScreen()));
                   },
-                  title: Text('Change Password'),
-                  leading: Icon(Icons.lock_open_rounded),
-                  trailing: Icon(
+                  title: const Text('Change Password'),
+                  leading: const Icon(Icons.lock_open_rounded),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 15,
                   ),
@@ -101,9 +101,9 @@ class CustomeDrawer extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (ctxt) => ManegeBannerScreen()));
                   },
-                  title: Text('Edit Banner'),
-                  leading: Icon(Icons.branding_watermark_rounded),
-                  trailing: Icon(
+                  title: const Text('Edit Banner'),
+                  leading: const Icon(Icons.branding_watermark_rounded),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 15,
                   ),
@@ -121,9 +121,9 @@ class CustomeDrawer extends StatelessWidget {
                                   history: historydata!,
                                 )));
                   },
-                  title: Text('History'),
-                  leading: Icon(Icons.history_toggle_off),
-                  trailing: Icon(
+                  title: const Text('History'),
+                  leading: const Icon(Icons.history_toggle_off),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 15,
                   ),
@@ -135,8 +135,8 @@ class CustomeDrawer extends StatelessWidget {
               AuthService auth = AuthService();
               auth.logout(context);
             },
-            title: Text('Log Out'),
-            leading: Icon(Icons.logout_sharp),
+            title: const Text('Log Out'),
+            leading: const Icon(Icons.logout_sharp),
           )
         ],
       ),

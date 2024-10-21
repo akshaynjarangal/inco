@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:inco/data/model/pointRequestModel.dart';
 import 'package:inco/data/model/productModel.dart';
 import 'package:inco/data/model/progressCountMode.dart';
 import 'package:inco/data/model/userModel.dart';
-import 'package:inco/presentation/views/admin/adminHomeScreen.dart';
 import 'package:inco/presentation/views/user/bottomNavigationBar.dart';
 import 'package:inco/service/auth.dart';
 import 'package:inco/state/bannerProvider.dart';
@@ -197,7 +195,7 @@ class AdminService {
               .getUserTotalPoint();
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (ctxt) => BottomNavigationBarScreen()),
+            MaterialPageRoute(builder: (ctxt) => const BottomNavigationBarScreen()),
             (Route<dynamic> route) => false,
           );
         } else {

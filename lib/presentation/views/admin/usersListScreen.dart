@@ -171,7 +171,7 @@ Widget buildUserCard(BuildContext context, List<UserModel> users) {
                   '${Api.baseUrl}storage/${user.profile!}'
                       .replaceAll('api', ''),
             ):
-             AssetImage('assets/images/person.jpg'),
+             const AssetImage('assets/images/person.jpg'),
             radius: 30,
           ),
           title: Text(user.name ?? ""),

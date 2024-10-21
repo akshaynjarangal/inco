@@ -16,12 +16,12 @@ class AllQrCodesScreen extends StatelessWidget {
         builder: (context, qrProvider, child) {
           // Show loading indicator while loading data
           if (qrProvider.isGenerating) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           // Show empty screen if no QR PDFs are found
           if (qrProvider.allQrPdfs!.isEmpty) {
-            return Center(child: Text('No QR codes found.'));
+            return const Center(child: Text('No QR codes found.'));
           }
           print(qrProvider.allQrPdfs!.length);
           // Display the list of QR PDFs
@@ -39,7 +39,7 @@ class AllQrCodesScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.download),
+                      icon: const Icon(Icons.download),
                       onPressed: () {
                         // Trigger the download method in the provider
                         qrProvider.downloadqrcodepdf(
@@ -49,7 +49,7 @@ class AllQrCodesScreen extends StatelessWidget {
                       },
                     ),
                     IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () {
                         _confirmDelete(context, qrProvider, index);
                       },
@@ -69,14 +69,14 @@ class AllQrCodesScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete this QR code?'),
+          title: const Text('Confirm Deletion'),
+          content: const Text('Are you sure you want to delete this QR code?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close dialog
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () async {
@@ -88,7 +88,7 @@ class AllQrCodesScreen extends StatelessWidget {
                 provider.notify();
                 Navigator.of(context).pop(); // Close dialog
               },
-              child: Text('Delete'),
+              child: const Text('Delete'),
             ),
           ],
         );

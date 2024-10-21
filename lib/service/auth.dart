@@ -5,7 +5,6 @@ import 'package:inco/core/widgets/snackbar.dart';
 import 'package:inco/data/model/userModel.dart';
 import 'package:inco/presentation/views/admin/adminHomeScreen.dart';
 import 'package:inco/presentation/views/auth/loginScreen.dart';
-import 'package:inco/presentation/views/user/HomeScreen.dart';
 import 'package:inco/presentation/views/user/bottomNavigationBar.dart';
 import 'package:inco/state/bannerProvider.dart';
 import 'package:inco/state/productProvider.dart';
@@ -68,12 +67,12 @@ class AuthService {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (ctxt) => BottomNavigationBarScreen()));
+                    builder: (ctxt) => const BottomNavigationBarScreen()));
           } else {
             await Provider.of<ProductProvider>(context, listen: false)
                 .getProgressAndCount();
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (ctxt) => AdminHomeScreen()));
+                MaterialPageRoute(builder: (ctxt) => const AdminHomeScreen()));
           }
         } else {
           snackbarWidget(context, response.data['message'], Colors.red);

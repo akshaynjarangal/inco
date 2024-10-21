@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
-import 'package:inco/core/utlities/validations.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/core/widgets/customeTextfield.dart';
-import 'package:inco/presentation/views/auth/registerScreen.dart';
 import 'package:inco/service/auth.dart';
 
 class PasswordScreen extends StatelessWidget {
@@ -25,7 +23,7 @@ class PasswordScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'New Password',
                 style: TextStyle(
                     color: appThemeColor,

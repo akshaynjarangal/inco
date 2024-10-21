@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/presentation/views/admin/showAllQrcodes.dart';
-import 'package:inco/service/qrService.dart';
 import 'package:inco/state/qrProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,14 +32,14 @@ class QrGenerationScreen extends StatelessWidget {
                 fontSize: 17)),
         actions: [
           IconButton(
-            icon: Icon(Icons.list, color: Colors.black),
+            icon: const Icon(Icons.list, color: Colors.black),
             onPressed: () async {
               await Provider.of<QrProvider>(context, listen: false)
                   .loadQrCodesFromDatabase();
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AllQrCodesScreen(),
+                  builder: (context) => const AllQrCodesScreen(),
                 ),
               );
             },
@@ -54,14 +53,14 @@ class QrGenerationScreen extends StatelessWidget {
           Consumer<QrProvider>(
             builder: (context, value, child) {
               if (value.isGenerating) {
-                return Center(
+                return const Center(
                     child: CircularProgressIndicator(
                   color: appThemeColor,
                 ));
               }
 
               if (value.qrPdfs.isEmpty) {
-                return Center(child: Text('NO PDF'));
+                return const Center(child: Text('NO PDF'));
               }
 
               return Expanded(
@@ -75,7 +74,7 @@ class QrGenerationScreen extends StatelessWidget {
                         title: Text(value.qrPdfs[index].split('/').last),
                         trailing: value.isDownloading &&
                                 value.generetingIndex == index
-                            ? SizedBox(
+                            ? const SizedBox(
                                 height: 30,
                                 width: 30,
                                 child: CircularProgressIndicator(

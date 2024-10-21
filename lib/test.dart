@@ -14,7 +14,7 @@ class TestScren extends StatelessWidget {
                 BannerService bannerService = BannerService();
                 bannerService.showNotification('title', 'body');
               },
-              child: Text('data'))),
+              child: const Text('data'))),
     );
   }
 }

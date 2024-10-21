@@ -19,7 +19,7 @@ class CustomeButton extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
-        decoration: BoxDecoration(boxShadow: [
+        decoration: BoxDecoration(boxShadow: const [
           BoxShadow(
               blurRadius: 1,
               spreadRadius: 1,
@@ -29,7 +29,7 @@ class CustomeButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),

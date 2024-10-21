@@ -4,7 +4,6 @@ import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/data/model/adminRedeemedHistoryModel.dart';
 import 'package:inco/service/adminService.dart';
-import 'package:inco/service/auth.dart';
 import 'package:inco/state/productProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -36,26 +35,26 @@ class DeliveryStatusScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               Expanded(
                 child: ListTile(
                   title: Text(
                     details.name!,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(details.address!),
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Card(
@@ -72,7 +71,7 @@ class DeliveryStatusScreen extends StatelessWidget {
                         ),
                         fit: BoxFit.fill),
                   ),
-                  margin: EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(5),
                   height: 100,
                   width: 150,
                 ),
@@ -84,7 +83,7 @@ class DeliveryStatusScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           CustomeButton(

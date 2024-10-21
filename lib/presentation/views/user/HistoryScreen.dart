@@ -40,7 +40,7 @@ class HistoryScreen extends StatelessWidget {
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Shipped to:',
                                   style: TextStyle(
                                       fontSize: 10,
@@ -68,12 +68,12 @@ class HistoryScreen extends StatelessWidget {
                             color: Colors.black12,
                             image: DecorationImage(
                                 image: NetworkImage(
-                                  '${Api.baseUrl}storage/${product.productImage!}'
+                                  '${Api.baseUrl}storage/${product.productImage}'
                                       .replaceAll('api', ''),
                                 ),
                                 fit: BoxFit.fill),
                           ),
-                          margin: EdgeInsets.all(5),
+                          margin: const EdgeInsets.all(5),
                           height: 100,
                           width: 150,
                         ),

@@ -1,12 +1,10 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/data/model/bannerModel.dart';
 import 'package:inco/data/model/notificationModel.dart';
-import 'package:inco/data/model/userRedeemHistoryModel.dart';
 import 'package:inco/presentation/views/user/HomeScreen.dart';
 import 'package:inco/service/auth.dart';
 
@@ -220,7 +218,7 @@ class BannerService {
 
   void showNotification(String title, String body) async {
     var bigPictureStyleInformation = BigPictureStyleInformation(
-      DrawableResourceAndroidBitmap('ic_launcher'),
+      const DrawableResourceAndroidBitmap('ic_launcher'),
       // largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
       contentTitle: title,
       summaryText: body,

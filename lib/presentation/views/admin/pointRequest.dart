@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/constent/endpoints.dart';
-import 'package:inco/presentation/views/admin/deliveryStatus.dart';
 import 'package:inco/presentation/views/admin/requestDetails.dart';
 import 'package:inco/state/productProvider.dart';
 import 'package:provider/provider.dart';
@@ -49,11 +48,11 @@ class PointRequestScreen extends StatelessWidget {
                   },
                   title: Text(
                     value.pointRequestes![index].complainant.name,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(value.pointRequestes![index].complainant.phone
                       .toString()),
-                  trailing: Icon(
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_outlined,
                     size: 15,
                   ),

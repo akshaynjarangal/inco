@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: mediaqry.height * 0.2,
                 ),
-                Text(
+                const Text(
                   'Login',
                   style: TextStyle(
                       color: appThemeColor,
@@ -93,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (contxt) => ForgotPasswordScreen()));
                       },
-                      child: Text('Forgot Password?   ')),
+                      child: const Text('Forgot Password?   ')),
                 ),
                 SizedBox(
                   height: mediaqry.height * 0.03,
@@ -116,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('New user?'),
+                    const Text('New user?'),
                     TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -124,7 +124,7 @@ class LoginScreen extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => RegistrationScreen()));
                         },
-                        child: Text('Sign Up'))
+                        child: const Text('Sign Up'))
                   ],
                 )
               ],

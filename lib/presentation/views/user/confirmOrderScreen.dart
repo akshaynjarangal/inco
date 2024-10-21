@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/core/widgets/customeButton.dart';
-import 'package:inco/data/model/deliveryAddressModel.dart';
-import 'package:inco/data/model/productModel.dart';
 import 'package:inco/presentation/views/user/changeAddressScreen.dart';
 import 'package:inco/service/adminService.dart';
 import 'package:inco/state/bannerProvider.dart';
@@ -12,9 +10,9 @@ import 'package:provider/provider.dart';
 
 class ConfirmOrderScreen extends StatelessWidget {
   const ConfirmOrderScreen({
-    Key? key,
+    super.key,
     this.product,
-  }) : super(key: key);
+  });
   final product;
   // final DeliveryAddress deliveryaddress;
 
@@ -48,7 +46,7 @@ class ConfirmOrderScreen extends StatelessWidget {
           builder: (context, value, child) => Column(
             children: [
               Container(
-                  margin: EdgeInsets.all(3),
+                  margin: const EdgeInsets.all(3),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: const Color.fromARGB(16, 0, 0, 0)),
@@ -61,24 +59,24 @@ class ConfirmOrderScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Deliver to: ',
                               style: TextStyle(
                                   fontSize: 13, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               value.usedeliveryaddress!.name!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w600),
                             ),
                             Text(
                               '${value.usedeliveryaddress!.place},\n${value.usedeliveryaddress!.city},\n${value.usedeliveryaddress!.district},\n${value.usedeliveryaddress!.pincode},',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Phone: ${value.usedeliveryaddress!.phone.toString()}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             )
                           ],
@@ -99,7 +97,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 border: Border.all(color: appThemeColor)),
-                            child: Center(
+                            child: const Center(
                               child: Text('change'),
                             ),
                           ),
@@ -107,7 +105,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                       ],
                     ),
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Card(
@@ -124,7 +122,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.black12,
                       ),
-                      margin: EdgeInsets.all(5),
+                      margin: const EdgeInsets.all(5),
                       height: 100,
                       width: 150,
                     ),
@@ -132,7 +130,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                       child: ListTile(
                         title: Text(
                           product.point!,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.green,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
@@ -143,7 +141,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               CustomeButton(
