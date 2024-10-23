@@ -53,16 +53,16 @@ class ForgotPasswordScreen extends StatelessWidget {
                     if (formkey.currentState!.validate()) {
                       bool isSend = await auth.sendOtpToMobile(
                           phoneController.text, context);
-                      // if (isSend) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (ctxtt) => OTPScreen(
-                              isReg: false,
-                              phone: phoneController.text,
-                            ),
-                          ));
-                      // }
+                      if (isSend) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (ctxtt) => OTPScreen(
+                                isReg: false,
+                                phone: phoneController.text,
+                              ),
+                            ));
+                      }
 
                       print('object');
                     }

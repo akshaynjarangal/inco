@@ -8,6 +8,7 @@ import 'package:inco/data/model/productModel.dart';
 import 'package:inco/data/model/progressCountMode.dart';
 import 'package:inco/data/model/userRedeemHistoryModel.dart';
 import 'package:inco/service/adminService.dart';
+import 'package:inco/state/profileProvider.dart';
 
 class ProductProvider extends ChangeNotifier {
   AdminService adminservice = AdminService();
@@ -28,8 +29,13 @@ class ProductProvider extends ChangeNotifier {
   List<PointRequestesModel>? pointRequestes = [];
   ProgressCountModel? progressdata;
 
+  Future<void> getUserRedeemHistory() async {
+    userRedemedHistory = await userService.getUserRedeemedHistory();
+    notifyListeners();
+  }
+
   Future<void> getProgressAndCount() async {
-  progressdata=  await adminservice.getProgressAndCountfun();
+    progressdata = await adminservice.getProgressAndCountfun();
     notifyListeners();
   }
 

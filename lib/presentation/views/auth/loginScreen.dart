@@ -11,9 +11,9 @@ import 'package:permission_handler/permission_handler.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   TextEditingController emailController =
-      TextEditingController(text: 'Inducomponentsinco@gmail.com');
+      TextEditingController(text: 'testuser2@gmail.com');
   TextEditingController passwordController =
-      TextEditingController(text: 'Incoadmin@123');
+      TextEditingController(text: '12345J');
   ValueNotifier<bool> passwordVisibility = ValueNotifier<bool>(true);
   var formkey = GlobalKey<FormState>();
   Future<void> requestAndroidNotificationPermission() async {

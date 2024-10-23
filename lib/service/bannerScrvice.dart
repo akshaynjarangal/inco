@@ -217,24 +217,34 @@ class BannerService {
   }
 
   void showNotification(String title, String body) async {
-    var bigPictureStyleInformation = BigPictureStyleInformation(
-      const DrawableResourceAndroidBitmap('ic_launcher'),
-      // largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
-      contentTitle: title,
-      summaryText: body,
-    );
+    // Use BigPictureStyleInformation without a large icon
+    // var bigPictureStyleInformation = BigPictureStyleInformation(
+    //   const DrawableResourceAndroidBitmap(
+    //       'ic_launcher'), // Replace this with your app icon
+    //       largeIcon:DrawableResourceAndroidBitmap(
+    //       'ic_launcher') ,
+    //   contentTitle: title,
+    //   summaryText: body,
+    // );
 
-    var androidDetails = AndroidNotificationDetails(
+    // Set the notification details with no large icon
+    var androidDetails = const AndroidNotificationDetails(
       'channelId',
       'channelName',
       importance: Importance.max,
-      styleInformation: bigPictureStyleInformation,
+      priority: Priority
+          .high, // Make sure the priority is high for important notifications
+      // styleInformation: bigPictureStyleInformation,
+      icon: 'ic_launcher', // Set the app icon here as the small icon
+      largeIcon: DrawableResourceAndroidBitmap(
+          'ic_launcher'), 
     );
 
     var notificationDetails = NotificationDetails(android: androidDetails);
 
+    // Show the notification
     await flutterLocalNotificationsPlugin.show(
-      0,
+      0, // Notification ID (use a unique ID for each notification)
       title,
       body,
       notificationDetails,

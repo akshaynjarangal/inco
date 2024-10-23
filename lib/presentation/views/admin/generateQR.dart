@@ -46,74 +46,79 @@ class QrGenerationScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 20),
-          Consumer<QrProvider>(
-            builder: (context, value, child) {
-              if (value.isGenerating) {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  color: appThemeColor,
-                ));
-              }
+      body: RefreshIndicator(
+        onRefresh: () async {
+       await   Future.delayed(const Duration(seconds: 2));
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            Consumer<QrProvider>(
+              builder: (context, value, child) {
+                if (value.isGenerating) {
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: appThemeColor,
+                  ));
+                }
 
-              if (value.qrPdfs.isEmpty) {
-                return const Center(child: Text('NO PDF'));
-              }
+                if (value.qrPdfs.isEmpty) {
+                  return const Center(child: Text('NO PDF'));
+                }
 
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: value.qrPdfs.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        leading: Image.asset('assets/images/pdfimg.png'),
-                        title: Text(value.qrPdfs[index].split('/').last),
-                        trailing: value.isDownloading &&
-                                value.generetingIndex == index
-                            ? const SizedBox(
-                                height: 30,
-                                width: 30,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 1.0,
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: value.qrPdfs.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          leading: Image.asset('assets/images/pdfimg.png'),
+                          title: Text(value.qrPdfs[index].split('/').last),
+                          trailing: value.isDownloading &&
+                                  value.generetingIndex == index
+                              ? const SizedBox(
+                                  height: 30,
+                                  width: 30,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1.0,
+                                  ),
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    value.generetingIndex = index;
+                                    value.downloadqrcodepdf(
+                                        value.qrPdfs[index],
+                                        value.qrPdfs[index].split('/').last,
+                                        context);
+                                    // Add your download logic here
+                                  },
+                                  icon: const Icon(Icons.download_rounded),
                                 ),
-                              )
-                            : IconButton(
-                                onPressed: () {
-                                  value.generetingIndex = index;
-                                  value.downloadqrcodepdf(
-                                      value.qrPdfs[index],
-                                      value.qrPdfs[index].split('/').last,
-                                      context);
-                                  // Add your download logic here
-                                },
-                                icon: const Icon(Icons.download_rounded),
-                              ),
-                      ),
-                    );
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            Consumer<QrProvider>(
+              builder: (context, value, child) {
+                return CustomeButton(
+                  ontap: () async {
+                    value.getpdf();
                   },
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 20),
-          Consumer<QrProvider>(
-            builder: (context, value, child) {
-              return CustomeButton(
-                ontap: () async {
-                  value.getpdf();
-                },
-                height: 40,
-                width: mediaQuery.width / 2,
-                text: 'Generate Qr',
-              );
-            },
-          ),
-          const SizedBox(height: 15),
-        ],
+                  height: 40,
+                  width: mediaQuery.width / 2,
+                  text: 'Generate Qr',
+                );
+              },
+            ),
+            const SizedBox(height: 15),
+          ],
+        ),
       ),
     );
   }

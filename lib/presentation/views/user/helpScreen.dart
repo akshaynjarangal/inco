@@ -124,9 +124,11 @@ class HelpScreen extends StatelessWidget {
                   children: [
                     Icon(Icons.email),
                     SizedBox(width: 50),
-                    Text('inducomponentsinco@gmail.com',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    Expanded(
+                      child: Text('inducomponentsinco@gmail.com',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                    ),
                   ],
                 ),
               ),

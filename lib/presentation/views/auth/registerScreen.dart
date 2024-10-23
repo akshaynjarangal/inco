@@ -251,7 +251,7 @@ class RegistrationScreen extends StatelessWidget {
                             pincode: pincodeController.text);
                         print('object');
 
-                        // if (isSend) {
+                        if (isSend) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -259,7 +259,7 @@ class RegistrationScreen extends StatelessWidget {
                                       regdata: userdata,
                                       isReg: true,
                                     )));
-                        // }
+                        }
                       }
                     },
                     height: 43,

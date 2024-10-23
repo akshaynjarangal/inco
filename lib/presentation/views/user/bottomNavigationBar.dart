@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inco/presentation/views/user/HistoryScreen.dart';
-import 'package:inco/presentation/views/user/HomeScreen.dart';
-import 'package:inco/presentation/views/user/profileScreen.dart';
 import 'package:inco/service/userScrvice.dart';
-import 'package:inco/state/bannerProvider.dart';
-import 'package:inco/state/productProvider.dart';
-import 'package:inco/state/profileProvider.dart';
+import 'package:inco/state/bottomNavigationProvider.dart';
+import 'package:inco/state/connectivityProvider.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavigationBarScreen extends StatefulWidget {
@@ -17,42 +13,84 @@ class BottomNavigationBarScreen extends StatefulWidget {
 }
 
 class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
-  int _currentIndex = 0; // To keep track of the selected index
   UserService userService = UserService();
 
   // List of pages to display
-  final List<Widget> _pages = [
-    UserHomeScreen(),
-    const HistoryScreen(),
-    const MyAccountPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex], // Display selected page
+      body: Stack(
+        children: [
+          IndexedStack(
+            index: context.watch<BottomNAvigationProvider>().currentIndex,
+            children: context.watch<BottomNAvigationProvider>().pages,
+          ),
+          Consumer<ConnectivityProvider>(
+              builder: (context, connectivityProvider, child) {
+                if (connectivityProvider.isOffline) {
+                  return Positioned.fill(
+                    child: Container(
+                      color: Colors.black.withOpacity(0.8), // Semi-transparent background
+                      child: const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.wifi_off,
+                              color: Colors.white,
+                              size: 100,
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              'You are offline',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              'Please check your internet connection',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink(); // Do nothing if online
+              },
+            ),
+        ],
+      ), // Display selected page
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex, // Current selected index
+        currentIndex: context
+            .watch<BottomNAvigationProvider>()
+            .currentIndex, // Current selected index
         onTap: (index) async {
-          var provider = Provider.of<ProfileProvider>(context, listen: false);
-          var productProvider =
-              Provider.of<ProductProvider>(context, listen: false);
-          if (index == 2 || index == 0) {
-            await provider.fetchProfile();
-            await productProvider.fetchProducts();
-               await Provider.of<BannerProvider>(
-                                                context,
-                                                listen: false)
-                                            .getUserTotalPoint();
-          }
-          if (index == 1) {
-            productProvider.userRedemedHistory =
-                await userService.getUserRedeemedHistory();
-          }
+          // var provider = Provider.of<ProfileProvider>(context, listen: false);
+          // var productProvider =
+          //     Provider.of<ProductProvider>(context, listen: false);
+          // if (index == 2 || index == 0) {
+          //   await provider.fetchProfile();
+          //   await productProvider.fetchProducts();
+          //   await Provider.of<BannerProvider>(context, listen: false)
+          //       .getUserTotalPoint();
+          // }
+          // if (index == 1) {
+          //   productProvider.userRedemedHistory =
+          //       await userService.getUserRedeemedHistory();
+          // }
 
-          setState(() {
-            _currentIndex = index; // Update selected index
-          });
+          context.read<BottomNAvigationProvider>().screenChange = index;
         },
         selectedItemColor: Colors.red, // Color for the selected item
         unselectedItemColor: Colors.grey, // Color for the unselected items

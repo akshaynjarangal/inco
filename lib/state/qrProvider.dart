@@ -6,12 +6,23 @@ class QrProvider extends ChangeNotifier {
   List<String>? _qrPdfs = [];
   List<String> get qrPdfs => _qrPdfs!;
 
-  List<Map<String,dynamic>>? allQrPdfs = [];
+  List<Map<String, dynamic>>? allQrPdfs = [];
   bool isGenerating = false;
+  bool isloading = false;
   bool isDownloading = false;
   int? generetingIndex;
 
   void notify() {
+    notifyListeners();
+  }
+
+  Future<void> removeQr(int index) async {
+    int id = allQrPdfs![index]['id']; // Get the ID of the QR code
+    await qrservice.deleteQrCode(id); // Delete the QR code from the database
+
+    // Remove the item from the list and notify listeners
+    allQrPdfs = List.from(allQrPdfs!);
+    allQrPdfs!.removeAt(index);
     notifyListeners();
   }
 
@@ -29,8 +40,7 @@ class QrProvider extends ChangeNotifier {
 
     // Add new QR PDFs to the database if not already present
     for (var qr in _qrPdfs!) {
-      if (!allQrPdfs!.contains(qr)) {
-       
+      if (!allQrPdfs!.any((element) => element['filePath'] == qr)) {
         await qrservice.addQrCode(qr);
       }
     }
@@ -51,13 +61,13 @@ class QrProvider extends ChangeNotifier {
   }
 
   Future<void> loadQrCodesFromDatabase() async {
-    isGenerating = true;
+    isloading = true;
     notifyListeners();
 
-     allQrPdfs = await qrservice.getAllQrCodes();
-    // allQrPdfs = savedQrCodes.map((e) => e['filePath'] as String).toList();
+    allQrPdfs = await qrservice.getAllQrCodes();
+    print(allQrPdfs);
 
-    isGenerating = false;
+    isloading = false;
     notifyListeners();
   }
 }

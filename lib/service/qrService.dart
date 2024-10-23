@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:inco/core/constent/endpoints.dart';
@@ -7,19 +6,17 @@ import 'package:inco/core/widgets/snackbar.dart';
 import 'package:inco/service/auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class QrService {
   Dio dio = Dio();
-
   static Database? _database;
 
   // Singleton pattern
-
   Future<Database> get database async {
     if (_database != null) return _database!;
-
     _database = await _initDB();
     return _database!;
   }
@@ -42,8 +39,13 @@ class QrService {
 
   Future<int> addQrCode(String filePath) async {
     final db = await database;
-    return await db.insert('qr_codes', {'filePath': filePath},
-        conflictAlgorithm: ConflictAlgorithm.ignore);
+    try {
+      return await db.insert('qr_codes', {'filePath': filePath},
+          conflictAlgorithm: ConflictAlgorithm.ignore);
+    } catch (e) {
+      print('Error inserting QR code: $e');
+      return -1; // Return an error code or handle as needed
+    }
   }
 
   Future<List<Map<String, dynamic>>> getAllQrCodes() async {
@@ -52,7 +54,7 @@ class QrService {
   }
 
   Future<int> deleteQrCode(int id) async {
-    final db = await database; 
+    final db = await database;
     return await db.delete('qr_codes', where: 'id = ?', whereArgs: [id]);
   }
 
@@ -61,29 +63,21 @@ class QrService {
     if (token != null) {
       try {
         dio.options.headers['Authorization'] = 'Bearer $token';
-
-        // Performing the GET request
         Response response = await dio.post(Api.createQr);
 
-        // Checking the response status code
-        if (response.statusCode == 200 ||
+        if (response.statusCode == 200 &&
             response.data['message'] == 'success') {
           List<dynamic> alllinks = response.data['pdf_links'];
-          Set<String> stringLinks = {};
-          for (var item in alllinks) {
-            stringLinks.add(item.toString());
-          }
-          // Successfully fetched data
+          Set<String> stringLinks =
+              alllinks.map((item) => item.toString()).toSet();
           print('Data fetched successfully: ${response.data}');
           return stringLinks.toList();
         } else {
-          // Handle the case where the server did not respond with 200 OK
           print('Failed to fetch data: ${response.statusCode}');
           return null;
         }
       } catch (e) {
-        // Handle any errors during the request
-        print('Error occurred: $e');
+        print('Error occurred while fetching QR codes: $e');
         return null;
       }
     }
@@ -118,11 +112,18 @@ class QrService {
       if (response.statusCode == 200) {
         print('PDF downloaded to: $filePath');
         snackbarWidget(context, 'PDF Downloaded', Colors.black);
+        final result = await Share.shareXFiles([XFile(filePath)], text: 'Great picture');
+
+if (result.status == ShareResultStatus.success) {
+    print('Thank you for sharing the picture!');
+}
       } else {
         print('Failed to download PDF: ${response.statusCode}');
+        snackbarWidget(context, 'Download failed', Colors.red);
       }
     } catch (e) {
       print('Error downloading PDF: $e');
+      snackbarWidget(context, 'Download failed', Colors.red);
     }
   }
 }

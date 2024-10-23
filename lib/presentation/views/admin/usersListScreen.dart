@@ -131,8 +131,10 @@ class _UsersListScreenState extends State<UsersListScreen>
                 return TabBarView(
                   controller: _tabController,
                   children: [
-                    buildUserCard(context, provider.filteredUsers!),
-                    buildUserCard(context, provider.filteredUsers!),
+                    buildUserCard(
+                        context, provider.filteredUsers!, _tabController.index),
+                    buildUserCard(
+                        context, provider.filteredUsers!, _tabController.index),
                   ],
                 );
               },
@@ -144,41 +146,50 @@ class _UsersListScreenState extends State<UsersListScreen>
   }
 }
 
-Widget buildUserCard(BuildContext context, List<UserModel> users) {
-  return ListView.builder(
-    itemCount: users.length,
-    itemBuilder: (BuildContext context, int index) {
-      UserModel user = users[index];
-      return Card(
-        child: ListTile(
-          onTap: () async {
-            Provider.of<ProfileProvider>(context, listen: false)
-                .setuserProfiledata(user);
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (ctxt) => MyAccountPage(
-                        index: index,
-                      )),
-            );
-            // Reload users after returning from account page
-            Provider.of<UserProvider>(context, listen: false).getAllUsers();
-          },
-          leading: CircleAvatar(
-            backgroundImage: user.profile != null
-                  ? NetworkImage(
-             
-                  '${Api.baseUrl}storage/${user.profile!}'
-                      .replaceAll('api', ''),
-            ):
-             const AssetImage('assets/images/person.jpg'),
-            radius: 30,
-          ),
-          title: Text(user.name ?? ""),
-          subtitle: Text(user.district ?? ""),
-          trailing: const Icon(Icons.arrow_forward_ios_sharp, size: 15),
-        ),
-      );
+Widget buildUserCard(BuildContext context, List<UserModel> users, index) {
+  return RefreshIndicator(
+    onRefresh: () async {
+      var pro = Provider.of<UserProvider>(context, listen: false);
+      if (index == 0) {
+        await pro.getAllUsers();
+      } else {
+        await pro.getSuspendedUsers();
+      }
     },
+    child: ListView.builder(
+      itemCount: users.length,
+      itemBuilder: (BuildContext context, int index) {
+        UserModel user = users[index];
+        return Card(
+          child: ListTile(
+            onTap: () async {
+              Provider.of<ProfileProvider>(context, listen: false)
+                  .setuserProfiledata(user);
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (ctxt) => MyAccountPage(
+                          index: index,
+                        )),
+              );
+              // Reload users after returning from account page
+              Provider.of<UserProvider>(context, listen: false).getAllUsers();
+            },
+            leading: CircleAvatar(
+              backgroundImage: user.profile != null
+                  ? NetworkImage(
+                      '${Api.baseUrl}storage/${user.profile!}'
+                          .replaceAll('api', ''),
+                    )
+                  : const AssetImage('assets/images/person.jpg'),
+              radius: 30,
+            ),
+            title: Text(user.name ?? ""),
+            subtitle: Text(user.district ?? ""),
+            trailing: const Icon(Icons.arrow_forward_ios_sharp, size: 15),
+          ),
+        );
+      },
+    ),
   );
 }

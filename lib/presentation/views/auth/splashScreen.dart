@@ -46,11 +46,14 @@ class _SplashScreenState extends State<SplashScreen> {
         await productprovider.fetchProducts();
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (ctxt) => const BottomNavigationBarScreen()));
-      } else {
+      } else if(AuthService.userType == 'admin') {
         await Provider.of<ProductProvider>(context, listen: false)
             .getProgressAndCount();
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (ctxt) => const AdminHomeScreen()));
+      }else{
+         Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (ctxt) =>  LoginScreen()));
       }
     }
   }

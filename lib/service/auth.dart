@@ -49,7 +49,7 @@ class AuthService {
           await prefs.setString('auth_token', token!);
           await prefs.setString('usertype', type!);
           userType = type;
-        
+
           print('Login successful! Token saved.');
           snackbarWidget(context, response.data['message'], Colors.green);
           // await Provider.of<ProfileProvider>(context).fetchProfile();
@@ -156,7 +156,7 @@ class AuthService {
     try {
       // Prepare data
       Map<String, dynamic> emailData = {
-        'phone': '+91$mobile',
+        'phone': mobile,
       };
 
       // Send a POST request to forgot password endpoint
@@ -182,7 +182,7 @@ class AuthService {
     try {
       // Prepare data
       Map<String, dynamic> otpData = {
-        'phone': '+91$phone',
+        'phone': phone,
         'code': otp,
       };
 
