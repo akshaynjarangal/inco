@@ -184,8 +184,13 @@ Widget buildUserCard(BuildContext context, List<UserModel> users, index) {
                   : const AssetImage('assets/images/person.jpg'),
               radius: 30,
             ),
-            title: Text(user.name ?? ""),
-            subtitle: Text(user.district ?? ""),
+            title: Text(user.name ?? "",
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(
+              '${user.point ?? ""} points',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+            ),
             trailing: const Icon(Icons.arrow_forward_ios_sharp, size: 15),
           ),
         );

@@ -27,7 +27,7 @@ class AuthService {
 
       // Request body (credentials)
       Map<String, dynamic> credentials = {
-        'email': email,
+        'email_or_phone': email,
         'password': password,
       };
 
@@ -51,7 +51,7 @@ class AuthService {
           userType = type;
 
           print('Login successful! Token saved.');
-          snackbarWidget(context, response.data['message'], Colors.green);
+          // snackbarWidget(context, response.data['message'], Colors.green);
           // await Provider.of<ProfileProvider>(context).fetchProfile();
           if (userType == 'user') {
             var profileprovider =
@@ -121,7 +121,7 @@ class AuthService {
       // Send a POST request to the registration endpoint
       Map<String, dynamic> userJson = data.toJson();
       userJson['code'] = otp;
-      userJson['phone'] = '+91${data.phone}';
+      userJson['phone'] = '${data.phone}';
       Response response = await dio.post(Api.register, data: userJson);
 
       // Check if registration was successful (status code 200 or 201, depending on API design)
@@ -169,10 +169,12 @@ class AuthService {
         return true;
       } else {
         print('Failed to send reset email: ${response.data['message']}');
+        snackbarWidget(context, 'can\'t find user', Colors.black);
         return false;
       }
     } catch (e) {
       print('Error during sending reset email: $e');
+      snackbarWidget(context, 'Error sending OTP', Colors.black);
       return false;
     }
   }
@@ -207,7 +209,7 @@ class AuthService {
     try {
       // Prepare data for password change
       Map<String, dynamic> passwordData = {
-        'phone': '+91$phone',
+        'phone': '$phone',
         'new_password': newPassword,
       };
 
@@ -217,7 +219,7 @@ class AuthService {
 
       if (response.statusCode == 200 && response.data['status'] == 'success') {
         print('Password changed successfully');
-
+        snackbarWidget(context, 'Password Updated', Colors.green);
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),

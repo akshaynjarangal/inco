@@ -13,12 +13,22 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+
     <application
-        android:label="INCO"
+        android:label="Inco Benefit Points"
         android:name="${applicationName}"
         
         android:icon="@mipmap/ic_launcher">
 
+
+        <receiver android:name="com.google.android.gms.auth.api.phone.SmsRetriever" 
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>
 
 
         <activity

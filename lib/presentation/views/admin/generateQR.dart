@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/widgets/customeButton.dart';
+import 'package:inco/core/widgets/snackbar.dart';
 import 'package:inco/presentation/views/admin/showAllQrcodes.dart';
 import 'package:inco/state/qrProvider.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,7 @@ class QrGenerationScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-       await   Future.delayed(const Duration(seconds: 2));
+          await Future.delayed(const Duration(seconds: 2));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -62,11 +63,11 @@ class QrGenerationScreen extends StatelessWidget {
                     color: appThemeColor,
                   ));
                 }
-
+      
                 if (value.qrPdfs.isEmpty) {
                   return const Center(child: Text('NO PDF'));
                 }
-
+      
                 return Expanded(
                   child: ListView.builder(
                     itemCount: value.qrPdfs.length,
@@ -112,7 +113,7 @@ class QrGenerationScreen extends StatelessWidget {
                   },
                   height: 40,
                   width: mediaQuery.width / 2,
-                  text: 'Generate Qr',
+                  text: 'Generate QR',
                 );
               },
             ),

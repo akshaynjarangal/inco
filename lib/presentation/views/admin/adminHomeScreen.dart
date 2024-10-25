@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/core/widgets/drawer.dart';
+import 'package:inco/core/widgets/snackbar.dart';
 import 'package:inco/data/model/progressCountMode.dart';
 import 'package:inco/presentation/views/admin/generateQR.dart';
 import 'package:inco/presentation/views/admin/pointRequest.dart';
@@ -10,6 +12,7 @@ import 'package:inco/presentation/views/admin/redeemRequest.dart';
 import 'package:inco/presentation/views/admin/usersListScreen.dart';
 import 'package:inco/state/connectivityProvider.dart';
 import 'package:inco/state/productProvider.dart';
+import 'package:inco/state/qrProvider.dart';
 import 'package:inco/state/userProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -82,7 +85,8 @@ class AdminHomeScreen extends StatelessWidget {
                               height: 10,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceAround,
                               children: [
                                 InkWell(
                                   onTap: () async {
@@ -128,10 +132,11 @@ class AdminHomeScreen extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    await Provider.of<ProductProvider>(context,
+                                    await Provider.of<ProductProvider>(
+                                            context,
                                             listen: false)
                                         .redeemrequestmarkTOShipped();
-
+    
                                     Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -158,7 +163,8 @@ class AdminHomeScreen extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                           ),
                                           Text(
-                                            value.progressdata!.redeemedRequests
+                                            value.progressdata!
+                                                .redeemedRequests
                                                 .toString(),
                                             style: const TextStyle(
                                                 fontSize: 35,
@@ -176,19 +182,22 @@ class AdminHomeScreen extends StatelessWidget {
                               height: 15,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceAround,
                               children: [
                                 InkWell(
                                   onTap: () async {
-                                    await Provider.of<ProductProvider>(context,
+                                    await Provider.of<ProductProvider>(
+                                            context,
                                             listen: false)
                                         .fetchProducts();
-
+    
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (ctxt) =>
-                                                ProductListScreen())).then((_) {
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (ctxt) =>
+                                                    ProductListScreen()))
+                                        .then((_) {
                                       value.getProgressAndCount();
                                     });
                                   },
@@ -222,7 +231,8 @@ class AdminHomeScreen extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    await Provider.of<ProductProvider>(context,
+                                    await Provider.of<ProductProvider>(
+                                            context,
                                             listen: false)
                                         .getPointRequestes();
                                     await Navigator.push(
@@ -249,7 +259,8 @@ class AdminHomeScreen extends StatelessWidget {
                                               'Reports',
                                               style: TextStyle(
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight.w800),
+                                                  fontWeight:
+                                                      FontWeight.w800),
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
@@ -274,7 +285,8 @@ class AdminHomeScreen extends StatelessWidget {
                               child: Text(
                                 '  Order Progress',
                                 style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
@@ -310,7 +322,8 @@ class AdminHomeScreen extends StatelessWidget {
                                         child: Text(product.productInfo),
                                       ),
                                       subtitle: Padding(
-                                        padding: const EdgeInsets.only(top: 6),
+                                        padding:
+                                            const EdgeInsets.only(top: 6),
                                         child: LinearProgressIndicator(
                                           minHeight: 8,
                                           color: appThemeColor,

@@ -5,9 +5,6 @@ import 'package:inco/data/model/userModel.dart';
 import 'package:inco/service/auth.dart';
 import 'package:inco/service/userScrvice.dart';
 
-AuthService auth = AuthService();
-UserService userService = UserService();
-
 class ProfileProvider extends ChangeNotifier {
   UserModel? _currentUserProfileData;
 
@@ -24,12 +21,14 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   Future<void> fetchProfile() async {
+    AuthService auth = AuthService();
     _currentUserProfileData = await auth.fetchUserProfile();
     print(currentUserProfileData!.name);
     notifyListeners();
   }
 
   Future<void> edituserProfile(newData, context) async {
+    UserService userService = UserService();
     bool isUpdated = await userService.updateUserProfile(newData);
     if (isUpdated) {
       await fetchProfile(); // Fetch the updated profile after a successful update
@@ -40,6 +39,7 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   Future<void> editProfileImage(File imageFile) async {
+    UserService userService = UserService();
     String? img = await userService.updateProfileImage(
         imageFile, currentUserProfileData!);
     if (img != null) {

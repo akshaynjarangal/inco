@@ -1,21 +1,21 @@
 import 'dart:convert';
 
-NotificationModel notificationModelFromJson(String str) => NotificationModel.fromJson(json.decode(str));
+NotificationModell notificationModelFromJson(String str) => NotificationModell.fromJson(json.decode(str));
 
-String notificationModelToJson(NotificationModel data) => json.encode(data.toJson());
+String notificationModelToJson(NotificationModell data) => json.encode(data.toJson());
 
-class NotificationModel {
+class NotificationModell {
     String message;
     NotiFication? newNotification;  // Nullable
     List<NotiFication> notifications;
 
-    NotificationModel({
+    NotificationModell({
         required this.message,
         this.newNotification,  // Nullable constructor parameter
         required this.notifications,
     });
 
-    factory NotificationModel.fromJson(Map<String, dynamic> json) => NotificationModel(
+    factory NotificationModell.fromJson(Map<String, dynamic> json) => NotificationModell(
         message: json["message"],
         newNotification: json["new_notification"] == null 
             ? null 

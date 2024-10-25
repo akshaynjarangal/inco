@@ -10,11 +10,10 @@ import 'package:permission_handler/permission_handler.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-  TextEditingController emailController =
-      TextEditingController(text: 'testuser2@gmail.com');
-  TextEditingController passwordController =
-      TextEditingController(text: '12345J');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   ValueNotifier<bool> passwordVisibility = ValueNotifier<bool>(true);
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
   var formkey = GlobalKey<FormState>();
   Future<void> requestAndroidNotificationPermission() async {
     if (await Permission.notification.isDenied) {
@@ -52,13 +51,32 @@ class LoginScreen extends StatelessWidget {
                 CustomeTextfield(
                   keybordType: TextInputType.emailAddress,
                   prifixicon: Icons.email,
-                  label: 'Email',
+                  label: 'Email or Phone',
                   controller: emailController,
-                  validator: validateEmail,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email or phone number';
+                    }
+
+                    // Regular expression for email validation
+                    final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+
+                    // Regular expression for phone validation (Assuming 10 digits)
+                    final phoneRegex = RegExp(r'^\d{10}$');
+
+                    if (!emailRegex.hasMatch(value) && 
+                        !phoneRegex.hasMatch(value)) {
+                      return 'Please enter a valid email or phone number';
+                    }
+
+                    return null; // Return null if validation is successful
+                  },
                 ),
-                ValueListenableBuilder(
+                ValueListenableBuilder(    
+                  
                   valueListenable: passwordVisibility,
                   builder: (context, value, child) => CustomeTextfield(
+                    
                     obsecure: passwordVisibility.value,
                     suffixicon: IconButton(
                         onPressed: () {
@@ -98,18 +116,34 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: mediaqry.height * 0.03,
                 ),
-                CustomeButton(
-                    ontap: () async {
-                      if (formkey.currentState!.validate()) {
-                        AuthService auth = AuthService();
-                        await auth.login(emailController.text,
-                            passwordController.text, context);
-                        print('object');
-                      }
-                    },
-                    height: 43,
-                    width: mediaqry.width / 2,
-                    text: 'Login'),
+                ValueListenableBuilder(
+                  valueListenable: isLoading,
+                  builder:
+                      (BuildContext context, dynamic value, Widget? child) {
+                    return isLoading.value
+                        ? SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
+                              color: appThemeColor,
+                            ),
+                          )
+                        : CustomeButton(
+                            ontap: () async {
+                              if (formkey.currentState!.validate()) {
+                                isLoading.value = true;
+                                AuthService auth = AuthService();
+                                await auth.login(emailController.text,
+                                    passwordController.text, context);
+                                isLoading.value = false;
+                                print('object');
+                              }
+                            },
+                            height: 43,
+                            width: mediaqry.width / 2,
+                            text: 'Login');
+                  },
+                ),
                 SizedBox(
                   height: mediaqry.height * 0.05,
                 ),

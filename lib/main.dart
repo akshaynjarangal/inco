@@ -14,8 +14,9 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Provider.debugCheckInvalidValueType = null;
-  var androidSettings = const AndroidInitializationSettings('ic_launcher');
-  var initializationSettings = InitializationSettings(android: androidSettings);
+ 
+  var androidSettings = const AndroidInitializationSettings('ic_stat_name');
+  var initializationSettings = InitializationSettings(android: androidSettings );
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   runApp(const MyApp());

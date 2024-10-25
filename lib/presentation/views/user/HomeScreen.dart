@@ -15,6 +15,7 @@ import 'package:inco/data/model/userModel.dart';
 import 'package:inco/presentation/views/user/confirmOrderScreen.dart';
 import 'package:inco/presentation/views/user/notifications.dart';
 import 'package:inco/service/adminService.dart';
+import 'package:inco/service/userScrvice.dart';
 import 'package:inco/state/bannerProvider.dart';
 import 'package:inco/state/connectivityProvider.dart';
 import 'package:inco/state/productProvider.dart';
@@ -38,52 +39,51 @@ class UserHomeScreen extends StatelessWidget {
         Provider.of<ProductProvider>(context, listen: false).productList;
     return Scaffold(
       drawer: const CustomeDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          var profileprovider =
-              Provider.of<ProfileProvider>(context, listen: false);
-          var productprovider =
-              Provider.of<ProductProvider>(context, listen: false);
-          await Provider.of<BannerProvider>(context, listen: false)
-              .getBanners();
-          await Provider.of<BannerProvider>(context, listen: false)
-              .getUserTotalPoint();
-          await profileprovider.fetchProfile();
-          await productprovider.fetchProducts();
-        },
-        child: Stack(children: [
-          NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  pinned: true,
-                  floating: true,
-                  backgroundColor: appThemeColor,
-                  title: const Text('INCO',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18)),
-                  centerTitle: true,
-                  actions: [
-                    IconButton(
-                        onPressed: () async {
-                          await Provider.of<BannerProvider>(context,
-                                  listen: false)
-                              .getNotifications(false);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NotificationPage()));
-                        },
-                        icon: const Icon(Icons.notifications_none))
-                  ],
-                ),
-              ];
+      body: Stack(children: [
+        NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                pinned: true,
+                floating: true,
+                backgroundColor: appThemeColor,
+                title: const Text('INCO',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18)),
+                centerTitle: true,
+                actions: [
+                  IconButton(
+                      onPressed: () async {
+                        await Provider.of<BannerProvider>(context,
+                                listen: false)
+                            .getNotifications(false);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const NotificationPage()));
+                      },
+                      icon: const Icon(Icons.notifications_none))
+                ],
+              ),
+            ];
+          },
+          body: RefreshIndicator(
+            onRefresh: () async {
+              var profileprovider =
+                  Provider.of<ProfileProvider>(context, listen: false);
+              var productprovider =
+                  Provider.of<ProductProvider>(context, listen: false);
+              await Provider.of<BannerProvider>(context, listen: false)
+                  .getBanners();
+              await Provider.of<BannerProvider>(context, listen: false)
+                  .getUserTotalPoint();
+              await profileprovider.fetchProfile();
+              await productprovider.fetchProducts();
             },
-            body: Padding(
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomScrollView(
                 slivers: [
@@ -123,22 +123,7 @@ class UserHomeScreen extends StatelessWidget {
                                       height: 100,
                                       width: 100,
                                     ),
-                                    // CircleAvatar(
-                                    //   radius: mediaqry.height * 0.037,
-                                    //   backgroundColor:
-                                    //       const Color.fromARGB(255, 211, 194, 42),
-                                    //   child: CircleAvatar(
-                                    //     backgroundColor:
-                                    //         const Color.fromARGB(255, 255, 241, 88),
-                                    //     radius: mediaqry.height * 0.03,
-                                    //     child: Icon(
-                                    //       Icons.bolt_rounded,
-                                    //       size: mediaqry.height * 0.06,
-                                    //       color:
-                                    //           const Color.fromARGB(255, 223, 205, 44),
-                                    //     ),
-                                    //   ),
-                                    // ),
+
                                     SizedBox(
                                       width: mediaqry.width * 0.1,
                                     ),
@@ -253,6 +238,8 @@ class UserHomeScreen extends StatelessWidget {
                                         Expanded(
                                           child: MaterialButton(
                                             onPressed: () async {
+                                              UserService userService =
+                                                  UserService();
                                               await userService
                                                   .pointRepportSent(
                                                       qrCodeResult, context);
@@ -298,7 +285,7 @@ class UserHomeScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                const Padding(
+                                Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -313,7 +300,7 @@ class UserHomeScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       SizedBox(
-                                        width: 200,
+                                        width: mediaqry.width * 0.5,
                                         child: Divider(
                                           thickness: 1,
                                           height: 1,
@@ -321,7 +308,7 @@ class UserHomeScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'Scan qr to get points',
+                                        'Scan QR to get points',
                                         style: TextStyle(
                                             color: Colors.grey, fontSize: 17),
                                       )
@@ -355,137 +342,154 @@ class UserHomeScreen extends StatelessWidget {
                     ),
                   ),
                   Consumer<BannerProvider>(
-                    builder: (context, value, child) => SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          ProductModel product = productprovider[index];
+                    builder: (context, value, child) => SliverToBoxAdapter(
+                      child: Container(
+                        height: mediaqry.height *
+                            0.2, // Adjust the height to fit the items properly
+                        child: ListView.builder(
+                          scrollDirection: Axis
+                              .horizontal, // Set scroll direction to horizontal
+                          itemCount: productprovider.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            ProductModel product = productprovider[index];
 
-                          return InkWell(
-                            onTap: () async {
-                              UserModel? user = Provider.of<ProfileProvider>(
-                                      context,
-                                      listen: false)
-                                  .currentUserProfileData;
-                              Provider.of<ProductProvider>(context,
-                                      listen: false)
-                                  .setdeliveryaddress(DeliveryAddress(
-                                      name: user!.name,
-                                      place: user.place,
-                                      city: user.city,
-                                      district: user.district,
-                                      pincode: user.pincode,
-                                      phone: user.phone));
+                            return InkWell(
+                              onTap: () async {
+                                UserModel? user = Provider.of<ProfileProvider>(
+                                        context,
+                                        listen: false)
+                                    .currentUserProfileData;
+                                Provider.of<ProductProvider>(context,
+                                        listen: false)
+                                    .setdeliveryaddress(
+                                  DeliveryAddress(
+                                    name: user!.name,
+                                    place: user.place,
+                                    city: user.city,
+                                    district: user.district,
+                                    pincode: user.pincode,
+                                    phone: user.phone,
+                                  ),
+                                );
 
-                              if (int.parse(value.userTotalPoint ?? '0') >=
-                                  int.parse(product.point!)) {
-                                Navigator.push(
+                                if (int.parse(value.userTotalPoint ?? '0') >=
+                                    int.parse(product.point!)) {
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            ConfirmOrderScreen(
-                                              product: product,
-                                            )));
-                              } else {
-                                snackbarWidget(
-                                    context,
-                                    'You don\'t have points to redeem',
-                                    Colors.black);
-                              }
-                            },
-                            child: Card(
-                              child: Row(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
+                                      builder: (context) => ConfirmOrderScreen(
+                                        product: product,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  snackbarWidget(
+                                      context,
+                                      'You don\'t have points to redeem',
+                                      Colors.black);
+                                }
+                              },
+                              child: Card(
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
                                           image: NetworkImage(
                                             '${Api.baseUrl}storage/${product.productImage!}'
                                                 .replaceAll('api', ''),
                                           ),
-                                          fit: BoxFit.fill),
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.black12,
+                                          fit: BoxFit.fill,
+                                        ),
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.black12,
+                                      ),
+                                      margin: const EdgeInsets.all(5),
+                                      height: mediaqry.height * 0.2,
+                                      width: 150,
                                     ),
-                                    margin: const EdgeInsets.all(5),
-                                    height: 100,
-                                    width: 150,
-                                  ),
-                                  Expanded(
-                                    child: ListTile(
-                                      title: Text(
-                                        product.point!,
-                                        style: const TextStyle(
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          product.point!,
+                                          style: const TextStyle(
                                             color: Colors.green,
                                             fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      subtitle: Text(
-                                        product.productInfo!,
-                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          product.productInfo!,
+                                          style: const TextStyle(
                                             fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        childCount: productprovider.length,
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           ),
-          Consumer<ConnectivityProvider>(
-            builder: (context, connectivityProvider, child) {
-              if (connectivityProvider.isOffline) {
-                return Positioned.fill(
-                  child: Container(
-                    color: Colors.black
-                        .withOpacity(0.8), // Semi-transparent background
-                    child: const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.wifi_off,
+        ),
+        Consumer<ConnectivityProvider>(
+          builder: (context, connectivityProvider, child) {
+            if (connectivityProvider.isOffline) {
+              return Positioned.fill(
+                child: Container(
+                  color: Colors.black
+                      .withOpacity(0.8), // Semi-transparent background
+                  child: const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.wifi_off,
+                          color: Colors.white,
+                          size: 100,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'You are offline',
+                          style: TextStyle(
                             color: Colors.white,
-                            size: 100,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                          SizedBox(height: 20),
-                          Text(
-                            'You are offline',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Please check your internet connection',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 16,
                           ),
-                          SizedBox(height: 20),
-                          Text(
-                            'Please check your internet connection',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 16,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
-                );
-              }
-              return const SizedBox.shrink(); // Do nothing if online
-            },
-          ),
-        ]),
-      ),
+                ),
+              );
+            }
+            return const SizedBox.shrink(); // Do nothing if online
+          },
+        ),
+      ]),
     );
   }
 

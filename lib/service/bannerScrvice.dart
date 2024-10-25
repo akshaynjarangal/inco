@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/data/model/bannerModel.dart';
 import 'package:inco/data/model/notificationModel.dart';
@@ -193,7 +195,7 @@ class BannerService {
       print(response.statusCode);
       if (response.statusCode == 200) {
         // Parse response data
-        NotificationModel data = NotificationModel.fromJson(response.data);
+        NotificationModell data = NotificationModell.fromJson(response.data);
 
         // Check if a notification should be sent
         try {
@@ -218,26 +220,27 @@ class BannerService {
 
   void showNotification(String title, String body) async {
     // Use BigPictureStyleInformation without a large icon
-    // var bigPictureStyleInformation = BigPictureStyleInformation(
-    //   const DrawableResourceAndroidBitmap(
-    //       'ic_launcher'), // Replace this with your app icon
-    //       largeIcon:DrawableResourceAndroidBitmap(
-    //       'ic_launcher') ,
-    //   contentTitle: title,
-    //   summaryText: body,
-    // );
+    var bigPictureStyleInformation = BigPictureStyleInformation(
+      const DrawableResourceAndroidBitmap(
+          'ic_launcher'), // Replace this with your app icon
+      largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
+      contentTitle: title,
+      summaryText: body,
+    );
 
     // Set the notification details with no large icon
     var androidDetails = const AndroidNotificationDetails(
+      color:appThemeColor,
       'channelId',
       'channelName',
       importance: Importance.max,
       priority: Priority
           .high, // Make sure the priority is high for important notifications
       // styleInformation: bigPictureStyleInformation,
+      fullScreenIntent: true,
+      channelShowBadge: false,
       icon: 'ic_launcher', // Set the app icon here as the small icon
-      largeIcon: DrawableResourceAndroidBitmap(
-          'ic_launcher'), 
+      largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
     );
 
     var notificationDetails = NotificationDetails(android: androidDetails);

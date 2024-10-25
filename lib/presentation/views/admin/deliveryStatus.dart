@@ -8,8 +8,9 @@ import 'package:inco/state/productProvider.dart';
 import 'package:provider/provider.dart';
 
 class DeliveryStatusScreen extends StatelessWidget {
-  const DeliveryStatusScreen({super.key, required this.details});
+  DeliveryStatusScreen({super.key, required this.details});
   final AdminRedeemedHistoryModel details;
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,8 @@ class DeliveryStatusScreen extends StatelessWidget {
                 child: ListTile(
                   title: Text(
                     details.name!,
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(details.address!),
                 ),
@@ -86,17 +88,33 @@ class DeliveryStatusScreen extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          CustomeButton(
-              ontap: () async {
-                AdminService adminService = AdminService();
-                await adminService.changeStatusToShipped(context, details.id);
-                await Provider.of<ProductProvider>(context, listen: false)
-                    .redeemrequestmarkTOShipped();
-                Navigator.pop(context);
-              },
-              height: 40,
-              width: medaquery.width / 2,
-              text: 'Mark as Shipped')
+          ValueListenableBuilder(
+              valueListenable: isLoading,
+              builder: (BuildContext context, dynamic value, Widget? child) {
+                return isLoading.value
+                    ? SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(
+                          color: appThemeColor,
+                        ),
+                      )
+                    : CustomeButton(
+                        ontap: () async {
+                          isLoading.value = true;
+                          AdminService adminService = AdminService();
+                          await adminService.changeStatusToShipped(
+                              context, details.id);
+                          await Provider.of<ProductProvider>(context,
+                                  listen: false)
+                              .redeemrequestmarkTOShipped();
+                               isLoading.value = false;
+                          Navigator.pop(context);
+                        },
+                        height: 40,
+                        width: medaquery.width / 2,
+                        text: 'Mark as Shipped');
+              })
         ],
       ),
     );

@@ -20,18 +20,26 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          IndexedStack(
-            index: context.watch<BottomNAvigationProvider>().currentIndex,
-            children: context.watch<BottomNAvigationProvider>().pages,
-          ),
-          Consumer<ConnectivityProvider>(
+      body: PopScope(
+        onPopInvokedWithResult: (didPop, result) {
+          context.read<BottomNAvigationProvider>().screenChange(0, context);
+        },
+        canPop: context.watch<BottomNAvigationProvider>().currentIndex == 0
+            ? true
+            : false,
+        child: Stack(
+          children: [
+            IndexedStack(
+              index: context.watch<BottomNAvigationProvider>().currentIndex,
+              children: context.watch<BottomNAvigationProvider>().pages,
+            ),
+            Consumer<ConnectivityProvider>(
               builder: (context, connectivityProvider, child) {
                 if (connectivityProvider.isOffline) {
                   return Positioned.fill(
                     child: Container(
-                      color: Colors.black.withOpacity(0.8), // Semi-transparent background
+                      color: Colors.black
+                          .withOpacity(0.8), // Semi-transparent background
                       child: const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +77,8 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
                 return const SizedBox.shrink(); // Do nothing if online
               },
             ),
-        ],
+          ],
+        ),
       ), // Display selected page
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: context
@@ -90,7 +99,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
           //       await userService.getUserRedeemedHistory();
           // }
 
-          context.read<BottomNAvigationProvider>().screenChange = index;
+          context.read<BottomNAvigationProvider>().screenChange(index, context);
         },
         selectedItemColor: Colors.red, // Color for the selected item
         unselectedItemColor: Colors.grey, // Color for the unselected items

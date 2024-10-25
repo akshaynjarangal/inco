@@ -6,8 +6,9 @@ import 'package:inco/state/productProvider.dart';
 import 'package:provider/provider.dart';
 
 class RequesteDetailsScreen extends StatelessWidget {
-  const RequesteDetailsScreen({super.key, required this.reqDetails});
+  RequesteDetailsScreen({super.key, required this.reqDetails});
   final PointRequestesModel reqDetails;
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -139,29 +140,48 @@ class RequesteDetailsScreen extends StatelessWidget {
             SizedBox(height: screenHeight * 0.04), // Space before buttons
 
             // Accept/Reject buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomeButton(
-                    ontap: () async {
-                      await Provider.of<ProductProvider>(context, listen: false)
-                          .acceptRequesst(reqDetails.complaintId);
-                      Navigator.pop(context);
-                    },
-                    height: 40,
-                    width: screenWidth / 4,
-                    text: 'Accept'),
-                CustomeButton(
-                    ontap: () async {
-                      await Provider.of<ProductProvider>(context, listen: false)
-                          .rejectRequestes(reqDetails.complaintId);
-                      Navigator.pop(context);
-                    },
-                    height: 40,
-                    width: screenWidth / 4,
-                    text: 'Reject')
-              ],
-            ),
+
+            ValueListenableBuilder(
+                valueListenable: isLoading,
+                builder: (BuildContext context, dynamic value, Widget? child) {
+                  return isLoading.value
+                      ? SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator(
+                            color: appThemeColor,
+                          ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CustomeButton(
+                                ontap: () async {
+                                  isLoading.value = true;
+                                  await Provider.of<ProductProvider>(context,
+                                          listen: false)
+                                      .acceptRequesst(reqDetails.complaintId);
+                                  Navigator.pop(context);
+                                   isLoading.value = false;
+                                },
+                                height: 40,
+                                width: screenWidth / 4,
+                                text: 'Accept'),
+                            CustomeButton(
+                                ontap: () async {
+                                   isLoading.value = true;
+                                  await Provider.of<ProductProvider>(context,
+                                          listen: false)
+                                      .rejectRequestes(reqDetails.complaintId);
+                                  Navigator.pop(context);
+                                   isLoading.value = false;
+                                },
+                                height: 40,
+                                width: screenWidth / 4,
+                                text: 'Reject')
+                          ],
+                        );
+                }),
             SizedBox(height: screenHeight * 0.02),
           ],
         ),

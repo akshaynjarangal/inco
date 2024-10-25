@@ -32,6 +32,7 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
   var formkey = GlobalKey<FormState>();
 
   ValueNotifier<String?> selectedDistrict = ValueNotifier<String?>(null);
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -187,33 +188,50 @@ class _ChangeAddressScreenState extends State<ChangeAddressScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                CustomeButton(
-                  height: 40,
-                  width: mediaqry.width / 2,
-                  text: 'save',
-                  ontap: () {
-                    if (formkey.currentState!.validate()) {
-                      DeliveryAddress newaddress = DeliveryAddress(
-                          name: nameController.text,
-                          place: placeController.text,
-                          city: cityController.text,
-                          district: selectedDistrict.value,
-                          pincode: pincodeController.text,
-                          phone: phoneController.text);
+                ValueListenableBuilder(
+                    valueListenable: isLoading,
+                    builder:
+                        (BuildContext context, dynamic value, Widget? child) {
+                      return isLoading.value
+                          ? SizedBox(
+                              height: 30,
+                              width: 30,
+                              child: CircularProgressIndicator(
+                                color: appThemeColor,
+                              ),
+                            )
+                          : CustomeButton(
+                              height: 40,
+                              width: mediaqry.width / 2,
+                              text: 'save',
+                              ontap: () {
+                                if (formkey.currentState!.validate()) {
+                                  isLoading.value = true;
+                                  DeliveryAddress newaddress = DeliveryAddress(
+                                      name: nameController.text,
+                                      place: placeController.text,
+                                      city: cityController.text,
+                                      district: selectedDistrict.value,
+                                      pincode: pincodeController.text,
+                                      phone: phoneController.text);
 
-                      Provider.of<ProductProvider>(context, listen: false)
-                          .setdeliveryaddress(newaddress);
+                                  Provider.of<ProductProvider>(context,
+                                          listen: false)
+                                      .setdeliveryaddress(newaddress);
 
-                      Navigator.pop(context);
-                      // Navigator.pushReplacement(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (ctxt) => ConfirmOrderScreen(
-                      //               product: widget.product,
-                      //             )));
-                    }
-                  },
-                )
+                                  Navigator.pop(context);
+                                  // Navigator.pushReplacement(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (ctxt) => ConfirmOrderScreen(
+                                  //               product: widget.product,
+                                  //
+                                  //          )));
+                                  isLoading.value = false;
+                                }
+                              },
+                            );
+                    })
               ],
             ),
           ),

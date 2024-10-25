@@ -24,6 +24,7 @@ class RegistrationScreen extends StatelessWidget {
   ValueNotifier<String?> selectedDistrict = ValueNotifier<String?>(null);
   ValueNotifier<bool> passwordVisibility = ValueNotifier<bool>(true);
   ValueNotifier<bool> confirmpasswordVisibility = ValueNotifier<bool>(true);
+   ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -233,10 +234,21 @@ class RegistrationScreen extends StatelessWidget {
                 SizedBox(
                   height: mediaqry.height * 0.03,
                 ),
-                CustomeButton(
+                ValueListenableBuilder(
+                  valueListenable: isLoading,
+                  builder: (BuildContext context, dynamic value, Widget? child) {
+                    return   isLoading.value?SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
+                              color: appThemeColor,
+                            ),
+                          )
+              :  CustomeButton(
                     ontap: () async {
                       AuthService auth = AuthService();
                       if (formkey.currentState!.validate()) {
+                         isLoading.value = true;
                         bool isSend = await auth.sendOtpToMobile(
                             phoneController.text, context);
 
@@ -260,11 +272,15 @@ class RegistrationScreen extends StatelessWidget {
                                       isReg: true,
                                     )));
                         }
+                         isLoading.value = false;
                       }
                     },
                     height: 43,
                     width: mediaqry.width / 2,
-                    text: 'Sign up'),
+                    text: 'Sign up');
+                  },
+                ),
+             
                 SizedBox(
                   height: mediaqry.height * 0.05,
                 ),

@@ -29,6 +29,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   var formkey = GlobalKey<FormState>();
 
   ValueNotifier<String?> selectedDistrict = ValueNotifier<String?>(null);
+   ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -177,27 +178,42 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                CustomeButton(
-                  height: 40,
-                  width: mediaqry.width / 2,
-                  text: 'change',
-                  ontap: () async {
-                    if (formkey.currentState!.validate()) {
-                      var provider =
-                          Provider.of<ProfileProvider>(context, listen: false);
+                ValueListenableBuilder(
+                    valueListenable: isLoading,
+                    builder:
+                        (BuildContext context, dynamic value, Widget? child) {
+                      return isLoading.value
+                          ? SizedBox(
+                              height: 30,
+                              width: 30,
+                              child: CircularProgressIndicator(
+                                color: appThemeColor,
+                              ),
+                            )
+                          : CustomeButton(
+                              height: 40,
+                              width: mediaqry.width / 2,
+                              text: 'change',
+                              ontap: () async {
+                                if (formkey.currentState!.validate()) {
+                                  var provider = Provider.of<ProfileProvider>(
+                                      context,
+                                      listen: false);
 
-                      UserModel updatedUser = UserModel(
-                          email: '',
-                          name: nameController.text,
-                          place: placeController.text,
-                          city: cityController.text,
-                          district: selectedDistrict.value,
-                          phone: '',
-                          pincode: pincodeController.text);
-                      await provider.edituserProfile(updatedUser, context);
-                    }
-                  },
-                )
+                                  UserModel updatedUser = UserModel(
+                                      email: '',
+                                      name: nameController.text,
+                                      place: placeController.text,
+                                      city: cityController.text,
+                                      district: selectedDistrict.value,
+                                      phone: '',
+                                      pincode: pincodeController.text);
+                                  await provider.edituserProfile(
+                                      updatedUser, context);
+                                }
+                              },
+                            );
+                    })
               ],
             ),
           ),

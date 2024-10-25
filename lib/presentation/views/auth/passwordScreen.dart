@@ -6,9 +6,11 @@ import 'package:inco/service/auth.dart';
 
 class PasswordScreen extends StatelessWidget {
   PasswordScreen({super.key, required this.phone});
-   final String phone;
+  final String phone;
 
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   var formkey = GlobalKey<FormState>();
   @override
@@ -57,20 +59,54 @@ class PasswordScreen extends StatelessWidget {
                   return null;
                 },
               ),
+              CustomeTextfield(
+                prifixicon: Icons.lock,
+                label: 'Confirm Password',
+                controller: confirmpasswordController,
+                validator: (value) {
+                  // Check if the value is empty
+                  if (value == null || value.isEmpty) {
+                    return "Enter confirm password";
+                  }
+
+                  if (passwordController.text !=
+                      confirmpasswordController.text) {
+                    return "Password des\'t match";
+                  }
+
+                  return null;
+                },
+              ),
               SizedBox(
                 height: mediaqry.height * 0.05,
               ),
-              CustomeButton(
-                  ontap: () async {
-                    if (formkey.currentState!.validate()) {
-                      AuthService auth = AuthService();
-                      await auth.resetPassword(phone, passwordController.text,context);
-                      print('object');
-                    }
-                  },
-                  height: 43,
-                  width: mediaqry.width / 2,
-                  text: 'Update'),
+              ValueListenableBuilder(
+                  valueListenable: isLoading,
+                  builder:
+                      (BuildContext context, dynamic value, Widget? child) {
+                    return isLoading.value
+                        ? SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
+                              color: appThemeColor,
+                            ),
+                          )
+                        : CustomeButton(
+                            ontap: () async {
+                              if (formkey.currentState!.validate()) {
+                                isLoading.value = true;
+                                AuthService auth = AuthService();
+                                await auth.resetPassword(
+                                    phone, passwordController.text, context);
+                                print('object');
+                                isLoading.value = false;
+                              }
+                            },
+                            height: 43,
+                            width: mediaqry.width / 2,
+                            text: 'Update');
+                  }),
               SizedBox(
                 height: mediaqry.height * 0.05,
               ),

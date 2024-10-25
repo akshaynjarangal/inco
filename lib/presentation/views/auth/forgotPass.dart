@@ -3,11 +3,13 @@ import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/core/widgets/customeTextfield.dart';
 import 'package:inco/presentation/views/auth/otpScreen.dart';
+import 'package:inco/service/auth.dart';
 import 'package:inco/state/profileProvider.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({super.key});
   TextEditingController phoneController = TextEditingController();
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   var formkey = GlobalKey<FormState>();
   @override
@@ -48,28 +50,44 @@ class ForgotPasswordScreen extends StatelessWidget {
               SizedBox(
                 height: mediaqry.height * 0.05,
               ),
-              CustomeButton(
-                  ontap: () async {
-                    if (formkey.currentState!.validate()) {
-                      bool isSend = await auth.sendOtpToMobile(
-                          phoneController.text, context);
-                      if (isSend) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (ctxtt) => OTPScreen(
-                                isReg: false,
-                                phone: phoneController.text,
-                              ),
-                            ));
-                      }
+              ValueListenableBuilder(
+                  valueListenable: isLoading,
+                  builder:
+                      (BuildContext context, dynamic value, Widget? child) {
+                    return isLoading.value
+                        ? SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
+                              color: appThemeColor,
+                            ),
+                          )
+                        : CustomeButton(
+                            ontap: () async {
+                              if (formkey.currentState!.validate()) {
+                                AuthService auth = AuthService();
+                                isLoading.value = true;
+                                bool isSend = await auth.sendOtpToMobile(
+                                    phoneController.text, context);
+                                isLoading.value = false;
+                                if (isSend) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (ctxtt) => OTPScreen(
+                                          isReg: false,
+                                          phone: phoneController.text,
+                                        ),
+                                      ));
+                                }
 
-                      print('object');
-                    }
-                  },
-                  height: 43,
-                  width: mediaqry.width / 2,
-                  text: 'send OTP'),
+                                print('object');
+                              }
+                            },
+                            height: 43,
+                            width: mediaqry.width / 2,
+                            text: 'send OTP');
+                  }),
               SizedBox(
                 height: mediaqry.height * 0.05,
               ),

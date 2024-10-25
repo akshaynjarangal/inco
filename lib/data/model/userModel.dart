@@ -10,6 +10,7 @@ class UserModel {
   String? profile;
   String? status;
   String? id;
+  String? point;
 
   // Constructor
   UserModel({
@@ -24,6 +25,7 @@ class UserModel {
     this.profile,
     this.status,
     this.id,
+    this.point,
   });
 
   // Factory constructor to create a UserModel from JSON
@@ -39,7 +41,8 @@ class UserModel {
         pincode: json['pincode'],
         profile: json['profile'],
         status: json['status'],
-        id: json['id'].toString());
+        id: json['id'].toString(),
+        point: json['point'].toString());
   }
 
   // Method to convert UserModel to JSON
@@ -55,7 +58,8 @@ class UserModel {
       'pincode': pincode,
       'profile': profile,
       'status': status,
-      'id': id
+      'id': id,
+      'point': id
     };
   }
 }

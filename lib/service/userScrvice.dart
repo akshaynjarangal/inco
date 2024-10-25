@@ -217,15 +217,15 @@ class UserService {
           String status = response.data['message'];
           snackbarWidget(context, status, Colors.black);
           Navigator.pop(context);
-          Navigator.pop(context);
+
           return status;
         } else {
           String status = response.data['message'];
           snackbarWidget(context, status, Colors.black);
-          print('Failed to update profile image: ${response.data}');
+          print('Failed to update password: ${response.data}');
         }
       } catch (e) {
-        print('Error updating profile image: $e');
+        print('Error updating password: $e');
         snackbarWidget(context, 'Somthing wrong', Colors.black);
       }
     } else {

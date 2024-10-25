@@ -8,6 +8,7 @@ import 'package:inco/data/model/productModel.dart';
 import 'package:inco/data/model/progressCountMode.dart';
 import 'package:inco/data/model/userRedeemHistoryModel.dart';
 import 'package:inco/service/adminService.dart';
+import 'package:inco/service/userScrvice.dart';
 import 'package:inco/state/profileProvider.dart';
 
 class ProductProvider extends ChangeNotifier {
@@ -30,6 +31,7 @@ class ProductProvider extends ChangeNotifier {
   ProgressCountModel? progressdata;
 
   Future<void> getUserRedeemHistory() async {
+    UserService userService = UserService();
     userRedemedHistory = await userService.getUserRedeemedHistory();
     notifyListeners();
   }
@@ -91,6 +93,7 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<void> deleteProduct(id) async {
+   
     isDeleting = true;
     notifyListeners();
     await adminservice.deleteProduct(id);

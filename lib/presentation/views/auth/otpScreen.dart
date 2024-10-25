@@ -1,22 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/presentation/views/auth/passwordScreen.dart';
 import 'package:inco/service/auth.dart';
+import 'package:pinput/pinput.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+import 'package:flutter/services.dart'; // For clipboard
+import 'package:permission_handler/permission_handler.dart';
+import 'package:telephony/telephony.dart';
 
-class OTPScreen extends StatelessWidget {
+class OTPScreen extends StatefulWidget {
   OTPScreen({super.key, this.regdata, required this.isReg, this.phone});
   final regdata;
   final bool isReg;
   final phone;
 
+  @override
+  _OTPScreenState createState() => _OTPScreenState();
+}
+
+class _OTPScreenState extends State<OTPScreen> {
+  final Telephony telephony = Telephony.instance;
   String? otptext;
-  var formkey = GlobalKey<FormState>();
+  TextEditingController otpController = TextEditingController();
+   var formkey = GlobalKey<FormState>();
 
   // Countdown timer duration (3 minutes)
   final int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 180;
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
+
+  @override
+  void initState() {
+    super.initState();
+    _requestSmsPermission();
+  }
+
+  void _requestSmsPermission() async {
+    final permissionGranted = await telephony.requestPhoneAndSmsPermissions;
+    if (permissionGranted!) {
+      _startListeningForSms();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("SMS permission is required for OTP autofill")),
+      );
+    }
+  }
+
+  void _startListeningForSms() {
+  telephony.listenIncomingSms(
+    onNewMessage: (SmsMessage message) {
+      final otp = _extractOtpFromMessage(message.body!);
+      if (otp != null) {
+        setState(() {
+          otpController.text = otp;
+        });
+
+        // Copy OTP to clipboard
+        Clipboard.setData(ClipboardData(text: otp)).then((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("OTP copied to clipboard")),
+          );
+        });
+      }
+    },
+    listenInBackground: false,
+  );
+}
+
+ String? _extractOtpFromMessage(String message) {
+  // This regex captures a 4-digit number at the start of the message.
+  final otpRegex = RegExp(r'(\d{4}) is your mobile verification OTP code');
+  final match = otpRegex.firstMatch(message);
+  return match?.group(1);
+}
+
+
+  @override
+  void dispose() {
+    otpController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,48 +133,89 @@ class OTPScreen extends StatelessWidget {
                       }
                     },
                   ),
-                  OtpTextField(
-                    autoFocus: true,
-                    clearText: true,
-                    fieldWidth: 50,
-                    focusedBorderColor: appThemeColor,
-                    numberOfFields: 4,
-                    borderColor: appThemeColor,
-                    showFieldAsBox: true,
-                    onCodeChanged: (String code) {
+                  // Pinput for autofill and manual entry
+                  Pinput(
+                    autofocus: true,
+                    length: 4,
+                    onChanged: (code) {
                       otptext = null;
                     },
-                    onSubmit: (String verificationCode) {
+                    onCompleted: (verificationCode) {
                       otptext = verificationCode;
                     },
+                    controller: otpController, // Controller for manual input
+                    defaultPinTheme: PinTheme(
+                      width: 50,
+                      height: 50,
+                      textStyle: TextStyle(
+                        fontSize: 20,
+                        color: appThemeColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: appThemeColor),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    focusedPinTheme: PinTheme(
+                      width: 50,
+                      height: 50,
+                      textStyle: TextStyle(
+                        fontSize: 20,
+                        color: appThemeColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: appThemeColor),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: mediaqry.height * 0.05,
                   ),
-                  CustomeButton(
-                    ontap: () async {
-                      AuthService auth = AuthService();
-                      if (formkey.currentState!.validate() && otptext != null) {
-                        if (isReg) {
-                          await auth.register(context, regdata, otptext);
-                        } else {
-                          bool isOtpVerified =
-                              await auth.verifyOtp(phone, otptext!);
-                          if (isOtpVerified) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (ctxt) => PasswordScreen(phone: phone),
-                              ),
-                            );
-                          }
-                        }
-                      }
-                    },
-                    height: 43,
-                    width: mediaqry.width / 2,
-                    text: 'Verify',
-                  ),
+                  ValueListenableBuilder(
+                      valueListenable: isLoading,
+                      builder:
+                          (BuildContext context, dynamic value, Widget? child) {
+                        return isLoading.value
+                            ? SizedBox(
+                                height: 30,
+                                width: 30,
+                                child: CircularProgressIndicator(
+                                  color: appThemeColor,
+                                ),
+                              )
+                            : CustomeButton(
+                                ontap: () async {
+                                  AuthService auth = AuthService();
+                                  if (formkey.currentState!.validate() &&
+                                      otptext != null) {
+                                    isLoading.value = true;
+                                    if (widget.isReg) {
+                                      await auth.register(
+                                          context, widget.regdata, otptext);
+                                    } else {
+                                      bool isOtpVerified = await auth.verifyOtp(
+                                          widget.phone, otptext!);
+                                      if (isOtpVerified) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (ctxt) => PasswordScreen(
+                                                phone: widget.phone),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                    isLoading.value = false;
+                                  }
+                                },
+                                height: 43,
+                                width: mediaqry.width / 2,
+                                text: 'Verify',
+                              );
+                      }),
                   SizedBox(
                     height: mediaqry.height * 0.05,
                   ),

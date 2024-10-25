@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/core/widgets/customeTextfield.dart';
+import 'package:inco/service/userScrvice.dart';
 import 'package:inco/state/profileProvider.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class ChangePasswordScreen extends StatelessWidget {
   ValueNotifier<bool> passwordVisibility = ValueNotifier<bool>(true);
   ValueNotifier<bool> confirmpasswordVisibility = ValueNotifier<bool>(true);
   ValueNotifier<bool> oldpasswordVisibility = ValueNotifier<bool>(true);
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -132,17 +134,34 @@ class ChangePasswordScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            CustomeButton(
-              height: 40,
-              width: mediaqry.width / 2,
-              text: 'change',
-              ontap: () async {
-                if (formkey.currentState!.validate()) {
-                  await userService.changePassword(
-                      oldpassController.text, passwordController.text, context);
-                }
-              },
-            )
+            ValueListenableBuilder(
+                valueListenable: isLoading,
+                builder: (BuildContext context, dynamic value, Widget? child) {
+                  return isLoading.value
+                      ? SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator(
+                            color: appThemeColor,
+                          ),
+                        )
+                      : CustomeButton(
+                          height: 40,
+                          width: mediaqry.width / 2,
+                          text: 'change',
+                          ontap: () async {
+                            if (formkey.currentState!.validate()) {
+                              isLoading.value = true;
+                              UserService userService = UserService();
+                              await userService.changePassword(
+                                  oldpassController.text,
+                                  passwordController.text,
+                                  context);
+                              isLoading.value = false;
+                            }
+                          },
+                        );
+                })
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/data/model/bannerModel.dart';
 import 'package:inco/data/model/notificationModel.dart';
 import 'package:inco/service/bannerScrvice.dart';
+import 'package:inco/service/userScrvice.dart';
 import 'package:inco/state/profileProvider.dart';
 
 class BannerProvider extends ChangeNotifier {
@@ -21,6 +22,7 @@ class BannerProvider extends ChangeNotifier {
   }
 
   Future<void> getUserTotalPoint() async {
+    UserService userService = UserService();
     userTotalPoint = await userService.getPointofUser();
     notifyListeners();
   }

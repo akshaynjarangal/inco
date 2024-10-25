@@ -9,13 +9,13 @@ import 'package:inco/state/productProvider.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmOrderScreen extends StatelessWidget {
-  const ConfirmOrderScreen({
+  ConfirmOrderScreen({
     super.key,
     this.product,
   });
   final product;
   // final DeliveryAddress deliveryaddress;
-
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
     var mediaqry = MediaQuery.of(context).size;
@@ -144,17 +144,33 @@ class ConfirmOrderScreen extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              CustomeButton(
-                  ontap: () async {
-                    AdminService adminService = AdminService();
-                    await adminService.redeemProduct(
-                        product, value.usedeliveryaddress!, context);
-                    await Provider.of<BannerProvider>(context, listen: false)
-                        .getNotifications(true);
-                  },
-                  height: 40,
-                  width: mediaqry.width / 2,
-                  text: 'Submit')
+              ValueListenableBuilder(
+                  valueListenable: isLoading,
+                  builder:
+                      (BuildContext context, dynamic valuee, Widget? child) {
+                    return isLoading.value
+                        ? SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
+                              color: appThemeColor,
+                            ),
+                          )
+                        : CustomeButton(
+                            ontap: () async {
+                              isLoading.value = true;
+                              AdminService adminService = AdminService();
+                              await adminService.redeemProduct(
+                                  product, value.usedeliveryaddress!, context);
+                              await Provider.of<BannerProvider>(context,
+                                      listen: false)
+                                  .getNotifications(true);
+                              isLoading.value = false;
+                            },
+                            height: 40,
+                            width: mediaqry.width / 2,
+                            text: 'Submit');
+                  })
             ],
           ),
         ),
