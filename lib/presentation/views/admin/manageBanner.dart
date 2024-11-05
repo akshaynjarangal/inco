@@ -65,7 +65,7 @@ class ManegeBannerScreen extends StatelessWidget {
                           width: double.infinity,
                           height: double.infinity,
                           child: Image.network(
-                            '${Api.baseUrl}storage/${value.bannerDatas![index].bannerImage}'
+                            '${Api.baseUrl}${value.bannerDatas![index].bannerImage}'
                                 .replaceAll('api', ''),
                             fit: BoxFit.fill,
                           ),

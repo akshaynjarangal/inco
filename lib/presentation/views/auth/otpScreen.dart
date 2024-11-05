@@ -5,13 +5,11 @@ import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/presentation/views/auth/passwordScreen.dart';
 import 'package:inco/service/auth.dart';
 import 'package:pinput/pinput.dart';
-import 'package:sms_autofill/sms_autofill.dart';
 import 'package:flutter/services.dart'; // For clipboard
-import 'package:permission_handler/permission_handler.dart';
 import 'package:telephony/telephony.dart';
 
 class OTPScreen extends StatefulWidget {
-  OTPScreen({super.key, this.regdata, required this.isReg, this.phone});
+  const OTPScreen({super.key, this.regdata, required this.isReg, this.phone});
   final regdata;
   final bool isReg;
   final phone;
@@ -42,7 +40,7 @@ class _OTPScreenState extends State<OTPScreen> {
       _startListeningForSms();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("SMS permission is required for OTP autofill")),
+        const SnackBar(content: Text("SMS permission is required for OTP autofill")),
       );
     }
   }
@@ -59,7 +57,7 @@ class _OTPScreenState extends State<OTPScreen> {
         // Copy OTP to clipboard
         Clipboard.setData(ClipboardData(text: otp)).then((_) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("OTP copied to clipboard")),
+            const SnackBar(content: Text("OTP copied to clipboard")),
           );
         });
       }
@@ -147,7 +145,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     defaultPinTheme: PinTheme(
                       width: 50,
                       height: 50,
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontSize: 20,
                         color: appThemeColor,
                         fontWeight: FontWeight.w600,
@@ -160,7 +158,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     focusedPinTheme: PinTheme(
                       width: 50,
                       height: 50,
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontSize: 20,
                         color: appThemeColor,
                         fontWeight: FontWeight.w600,
@@ -179,7 +177,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       builder:
                           (BuildContext context, dynamic value, Widget? child) {
                         return isLoading.value
-                            ? SizedBox(
+                            ? const SizedBox(
                                 height: 30,
                                 width: 30,
                                 child: CircularProgressIndicator(

@@ -145,7 +145,7 @@ class RequesteDetailsScreen extends StatelessWidget {
                 valueListenable: isLoading,
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return isLoading.value
-                      ? SizedBox(
+                      ? const SizedBox(
                           height: 30,
                           width: 30,
                           child: CircularProgressIndicator(

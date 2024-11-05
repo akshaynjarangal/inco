@@ -237,7 +237,7 @@ class RegistrationScreen extends StatelessWidget {
                 ValueListenableBuilder(
                   valueListenable: isLoading,
                   builder: (BuildContext context, dynamic value, Widget? child) {
-                    return   isLoading.value?SizedBox(
+                    return   isLoading.value?const SizedBox(
                             height: 30,
                             width: 30,
                             child: CircularProgressIndicator(
@@ -250,7 +250,7 @@ class RegistrationScreen extends StatelessWidget {
                       if (formkey.currentState!.validate()) {
                          isLoading.value = true;
                         bool isSend = await auth.sendOtpToMobile(
-                            phoneController.text, context);
+                            phoneController.text, context,false);
 
                         UserModel userdata = UserModel(
                             password: passwordController.text,

@@ -4,7 +4,6 @@ import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/core/widgets/customeTextfield.dart';
 import 'package:inco/presentation/views/auth/otpScreen.dart';
 import 'package:inco/service/auth.dart';
-import 'package:inco/state/profileProvider.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({super.key});
@@ -55,7 +54,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   builder:
                       (BuildContext context, dynamic value, Widget? child) {
                     return isLoading.value
-                        ? SizedBox(
+                        ? const SizedBox(
                             height: 30,
                             width: 30,
                             child: CircularProgressIndicator(
@@ -68,7 +67,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 AuthService auth = AuthService();
                                 isLoading.value = true;
                                 bool isSend = await auth.sendOtpToMobile(
-                                    phoneController.text, context);
+                                    phoneController.text, context,true);
                                 isLoading.value = false;
                                 if (isSend) {
                                   Navigator.push(

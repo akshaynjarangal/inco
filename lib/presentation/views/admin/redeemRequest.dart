@@ -35,6 +35,7 @@ class RedeemRequestScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<ProductProvider>(builder: (context, value, child) => 
+        value.redeemRequestes!.isEmpty||value.redeemRequestes==null?const Center(child: Text('No Requestes'),):
            ListView.builder(
             itemCount:value.redeemRequestes!.length,
             itemBuilder: (BuildContext context, int index) {
@@ -48,7 +49,7 @@ class RedeemRequestScreen extends StatelessWidget {
                         color: Colors.black12,
                         image: DecorationImage(
                             image: NetworkImage(
-                              '${Api.baseUrl}storage/${request.productImage!}'
+                              '${Api.baseUrl}${request.productImage!}'
                                   .replaceAll('api', ''),
                             ),
                             fit: BoxFit.fill),

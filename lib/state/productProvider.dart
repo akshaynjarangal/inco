@@ -9,7 +9,6 @@ import 'package:inco/data/model/progressCountMode.dart';
 import 'package:inco/data/model/userRedeemHistoryModel.dart';
 import 'package:inco/service/adminService.dart';
 import 'package:inco/service/userScrvice.dart';
-import 'package:inco/state/profileProvider.dart';
 
 class ProductProvider extends ChangeNotifier {
   AdminService adminservice = AdminService();

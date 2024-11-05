@@ -23,20 +23,20 @@ class UserService {
           Api.updateProfile, // API endpoint for updating the profile
           data: userJson, // Send the updated profile data
         );
-        print(response.data);
+        // print(response.data);
         if (response.statusCode == 200) {
-          print('Profile updated successfully');
+          // print('Profile updated successfully');
           return response.data['message'].toString().contains('successfully');
         } else {
-          print('Failed to update profile: ${response.data}');
+          // print('Failed to update profile: ${response.data}');
           return false;
         }
       } catch (e) {
-        print('Error updating profile: $e');
+        // print('Error updating profile: $e');
         return false;
       }
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
       return false;
     }
   }
@@ -68,22 +68,22 @@ class UserService {
             },
           ),
         );
-        print(response.data);
+        // print(response.data);
 
         if (response.statusCode == 200 ||
             response.data['message'] == 'success') {
-          print('Profile image updated successfully');
+          // print('Profile image updated successfully');
           return response.data['image'];
         } else {
-          print('Failed to update profile image: ${response.data}');
+          // print('Failed to update profile image: ${response.data}');
           return null;
         }
       } catch (e) {
-        print('Error updating profile image: $e');
+        // print('Error updating profile image: $e');
         return null;
       }
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
       return null;
     }
   }
@@ -94,7 +94,7 @@ class UserService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -110,7 +110,7 @@ class UserService {
       if (response.statusCode == 200) {
         // Assuming the response is a list of products
         List<dynamic> data = response.data;
-        print(data);
+        // print(data);
 
         // Map the response to a list of ProductModel
         List<UserRedeemedHistoryModel> productList = data
@@ -120,11 +120,11 @@ class UserService {
 
         return productList;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return null;
     }
   }
@@ -143,20 +143,20 @@ class UserService {
             },
           ),
         );
-        print(response.data);
+        // print(response.data);
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           snackbarWidget(
               context, 'report send', const Color.fromARGB(255, 181, 168, 54));
           Navigator.pop(context);
         } else {
-          print('Failed to update profile image: ${response.data}');
+          // print('Failed to update profile image: ${response.data}');
         }
       } catch (e) {
-        print('Error updating profile image: $e');
+        // print('Error updating profile image: $e');
       }
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
     }
   }
 
@@ -174,7 +174,7 @@ class UserService {
             },
           ),
         );
-        print(response.data);
+        // print(response.data);
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           String status = response.data['status'];
@@ -182,13 +182,13 @@ class UserService {
           // Navigator.pop(context);
           return status;
         } else {
-          print('Failed to update profile image: ${response.data}');
+          // print('Failed to update profile image: ${response.data}');
         }
       } catch (e) {
-        print('Error updating profile image: $e');
+        // print('Error updating profile image: $e');
       }
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
     }
     return null;
   }
@@ -208,7 +208,7 @@ class UserService {
             },
           ),
         );
-        print(response.data);
+        // print(response.data);
 
         if (response.statusCode == 200 &&
                 response.data['status'] == 'success' ||
@@ -222,14 +222,14 @@ class UserService {
         } else {
           String status = response.data['message'];
           snackbarWidget(context, status, Colors.black);
-          print('Failed to update password: ${response.data}');
+          // print('Failed to update password: ${response.data}');
         }
       } catch (e) {
-        print('Error updating password: $e');
+        // print('Error updating password: $e');
         snackbarWidget(context, 'Somthing wrong', Colors.black);
       }
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
     }
     return null;
   }
@@ -248,18 +248,18 @@ class UserService {
             },
           ),
         );
-        print(response.data);
+        // print(response.data);
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           return response.data['points'].toString();
         } else {
-          print('Failed to update profile image: ${response.data}');
+          // print('Failed to update profile image: ${response.data}');
         }
       } catch (e) {
-        print('Error updating profile image: $e');
+        // print('Error updating profile image: $e');
       }
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
     }
     return null;
   }

@@ -36,16 +36,21 @@ class _NotificationPageState extends State<NotificationPage> {
       ),
       body: SafeArea(
         child: Consumer<BannerProvider>(
-          builder: (context, value, child) => ListView.builder(
-            padding: const EdgeInsets.all(8.0),
-            itemCount: value.notificationList!
-                .length, // You can change this based on your needs
-            itemBuilder: (context, index) {
-              return NotificationTile(
-                data: value.notificationList![index],
-              );
-            },
-          ),
+          builder: (context, value, child) =>
+              value.notificationList!.isEmpty || value.notificationList == null
+                  ? const Center(
+                      child: Text('No Notifications'),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.all(8.0),
+                      itemCount: value.notificationList!
+                          .length, // You can change this based on your needs
+                      itemBuilder: (context, index) {
+                        return NotificationTile(
+                          data: value.notificationList![index],
+                        );
+                      },
+                    ),
         ),
       ),
     );
@@ -68,7 +73,7 @@ class NotificationTile extends StatelessWidget {
           backgroundColor: Colors.black12,
           radius: 20,
           backgroundImage: NetworkImage(
-            '${Api.baseUrl}storage/${data.image}'.replaceAll('api', ''),
+            '${Api.baseUrl}${data.image}'.replaceAll('api', ''),
           ),
         ),
         title: Text(

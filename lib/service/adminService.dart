@@ -49,12 +49,12 @@ class AdminService {
       );
 
       if (response.statusCode == 200) {
-        print("Data posted successfully: ${response.data}");
+        // print("Data posted successfully: ${response.data}");
       } else {
-        print("Failed to post data: ${response.statusMessage}");
+        // print("Failed to post data: ${response.statusMessage}");
       }
     } catch (e) {
-      print("Error posting data: $e");
+      // print("Error posting data: $e");
     }
   }
 
@@ -64,7 +64,7 @@ class AdminService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -80,7 +80,7 @@ class AdminService {
       if (response.statusCode == 200) {
         // Assuming the response is a list of products
         List<dynamic> data = response.data;
-        print(data);
+        // print(data);
 
         // Map the response to a list of ProductModel
         List<ProductModel> productList = data
@@ -89,11 +89,11 @@ class AdminService {
 
         return productList;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return null;
     }
   }
@@ -113,16 +113,16 @@ class AdminService {
         );
 
         if (response.statusCode == 200) {
-          print('Product deleted successfully');
+          // print('Product deleted successfully');
           // Handle successful delete, e.g., update product list
         } else {
-          print('Failed to delete product: ${response.data}');
+          // print('Failed to delete product: ${response.data}');
         }
       } else {
-        print('No token found, please login.');
+        // print('No token found, please login.');
       }
     } catch (e) {
-      print('Error deleting product: $e');
+      // print('Error deleting product: $e');
     }
   }
 
@@ -142,22 +142,22 @@ class AdminService {
           Api.uploadQrdata,
           data: {'data': data},
         );
-        print(response.statusCode);
-        print(response.data);
+        // print(response.statusCode);
+        // print(response.data);
         // Check if the status code indicates success
         if (response.statusCode == 200 || response.statusCode == 201) {
-          print('Data posted successfully');
+          // print('Data posted successfully');
           return response;
         } else {
-          print('Failed to post data: ${response.data}');
+          // print('Failed to post data: ${response.data}');
           return null;
         }
       } else {
-        print('No token found, please login.');
+        // print('No token found, please login.');
         return null;
       }
     } catch (e) {
-      print('Error during POST request: $e');
+      // print('Error during POST request: $e');
       return null;
     }
   }
@@ -184,29 +184,30 @@ class AdminService {
                 '${addres.name},${addres.place},${addres.city},${addres.district},${addres.pincode},Ph: ${addres.phone},'
           },
         );
-        print(response.statusCode);
-        print(response.data);
+        // print(response.statusCode);
+        // print(response.data);
         // Check if the status code indicates success
-        if (response.statusCode == 200 ||
+        if (response.statusCode == 201 &&
             response.data['status'] == 'success') {
-          print('Data posted successfully');
+          // print('Data posted successfully');
           snackbarWidget(context, response.data['message'], Colors.green);
           await Provider.of<BannerProvider>(context, listen: false)
               .getUserTotalPoint();
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (ctxt) => const BottomNavigationBarScreen()),
+            MaterialPageRoute(
+                builder: (ctxt) => const BottomNavigationBarScreen()),
             (Route<dynamic> route) => false,
           );
         } else {
           snackbarWidget(context, response.data['message'], Colors.red);
-          print('Failed to post data: ${response.data}');
+          // print('Failed to post data: ${response.data}');
         }
       } else {
-        print('No token found, please login.');
+        // print('No token found, please login.');
       }
     } catch (e) {
-      print('Error during POST request: $e');
+      // print('Error during POST request: $e');
     }
   }
 
@@ -216,7 +217,7 @@ class AdminService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -232,7 +233,7 @@ class AdminService {
       if (response.statusCode == 200) {
         // Assuming the response is a list of products
         List<dynamic> data = response.data;
-        print(data);
+        // print(data);
 
         // Map the response to a list of ProductModel
         List<AdminRedeemedHistoryModel> productList = data
@@ -242,11 +243,11 @@ class AdminService {
 
         return productList;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return null;
     }
   }
@@ -257,7 +258,7 @@ class AdminService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -273,7 +274,7 @@ class AdminService {
       if (response.statusCode == 200) {
         // Assuming the response is a list of products
         List<dynamic> data = response.data;
-        print(data);
+        // print(data);
 
         // Map the response to a list of ProductModel
         List<AdminRedeemedHistoryModel> productList = data
@@ -283,11 +284,11 @@ class AdminService {
 
         return productList;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return null;
     }
   }
@@ -309,11 +310,11 @@ class AdminService {
           '${Api.markAsShipped}/$id/status',
           data: {'status': 'shipped'},
         );
-        print(response.statusCode);
-        print(response.data);
+        // print(response.statusCode);
+        // print(response.data);
         // Check if the status code indicates success
         if (response.statusCode == 200 || response.statusCode == 201) {
-          print('Data posted successfully');
+          // print('Data posted successfully');
           snackbarWidget(context, 'Status Updated', Colors.green);
           // Navigator.pushAndRemoveUntil(
           //   context,
@@ -321,13 +322,13 @@ class AdminService {
           //   (Route<dynamic> route) => false,
           // );
         } else {
-          print('Failed to post data: ${response.data}');
+          // print('Failed to post data: ${response.data}');
         }
       } else {
-        print('No token found, please login.');
+        // print('No token found, please login.');
       }
     } catch (e) {
-      print('Error during POST request: $e');
+      // print('Error during POST request: $e');
     }
   }
 
@@ -337,7 +338,7 @@ class AdminService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -353,7 +354,7 @@ class AdminService {
       if (response.statusCode == 200) {
         // Assuming the response is a list of products
         List<dynamic> data = response.data;
-        print(data);
+        // print(data);
 
         // Map the response to a list of ProductModel
         List<PointRequestesModel> productList = data
@@ -362,11 +363,11 @@ class AdminService {
 
         return productList;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return null;
     }
   }
@@ -385,22 +386,22 @@ class AdminService {
         Response response = await dio.post(
           '${Api.acceptRequest}/$id/accept',
         );
-        print(response.statusCode);
-        print(response.data);
+        // print(response.statusCode);
+        // print(response.data);
         // Check if the status code indicates success
         if (response.statusCode == 200 || response.statusCode == 201) {
-          print('Data posted successfully');
+          // print('Data posted successfully');
           return response;
         } else {
-          print('Failed to post data: ${response.data}');
+          // print('Failed to post data: ${response.data}');
           return null;
         }
       } else {
-        print('No token found, please login.');
+        // print('No token found, please login.');
         return null;
       }
     } catch (e) {
-      print('Error during POST request: $e');
+      // print('Error during POST request: $e');
       return null;
     }
   }
@@ -419,22 +420,22 @@ class AdminService {
         Response response = await dio.post(
           '${Api.acceptRequest}/$id/reject',
         );
-        print(response.statusCode);
-        print(response.data);
+        // print(response.statusCode);
+        // print(response.data);
         // Check if the status code indicates success
         if (response.statusCode == 200 || response.statusCode == 201) {
-          print('Data posted successfully');
+          // print('Data posted successfully');
           return response;
         } else {
-          print('Failed to post data: ${response.data}');
+          // print('Failed to post data: ${response.data}');
           return null;
         }
       } else {
-        print('No token found, please login.');
+        // print('No token found, please login.');
         return null;
       }
     } catch (e) {
-      print('Error during POST request: $e');
+      // print('Error during POST request: $e');
       return null;
     }
   }
@@ -444,7 +445,7 @@ class AdminService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -456,11 +457,11 @@ class AdminService {
       Response response = await dio.get(
         Api.getAllUser, // Replace with your API endpoint
       );
-
+    
       if (response.statusCode == 200) {
         // Assuming the response is a list of products
         List<dynamic> data = response.data;
-        print(data);
+        // print(data);
 
         // Map the response to a list of ProductModel
         List<UserModel> productList =
@@ -468,11 +469,11 @@ class AdminService {
 
         return productList;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return null;
     }
   }
@@ -482,7 +483,7 @@ class AdminService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -498,7 +499,7 @@ class AdminService {
       if (response.statusCode == 200) {
         // Assuming the response is a list of products
         List<dynamic> data = response.data;
-        print(data);
+        // print(data);
 
         // Map the response to a list of ProductModel
         List<UserModel> productList =
@@ -506,11 +507,11 @@ class AdminService {
 
         return productList;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return null;
     }
   }
@@ -521,7 +522,7 @@ class AdminService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -535,22 +536,22 @@ class AdminService {
       );
 
       // Print the response for debugging
-      print(response.data);
+      // print(response.data);
 
       if (response.statusCode == 200) {
         // Assuming the response is an object, not a list
         Map<String, dynamic> data = response.data;
-        print('hh');
+        // print('hh');
         // Map the response to ProgressCountModel
         ProgressCountModel progressCount = ProgressCountModel.fromJson(data);
-        print('hello');
+        // print('hello');
         return progressCount;
       } else {
-        print('Failed to fetch data: ${response.statusCode}');
+        // print('Failed to fetch data: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching data: $e');
+      // print('Error fetching data: $e');
       return null;
     }
   }

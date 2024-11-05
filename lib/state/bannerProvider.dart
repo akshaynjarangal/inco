@@ -6,7 +6,6 @@ import 'package:inco/data/model/bannerModel.dart';
 import 'package:inco/data/model/notificationModel.dart';
 import 'package:inco/service/bannerScrvice.dart';
 import 'package:inco/service/userScrvice.dart';
-import 'package:inco/state/profileProvider.dart';
 
 class BannerProvider extends ChangeNotifier {
   BannerService bannerService = BannerService();
@@ -33,7 +32,7 @@ class BannerProvider extends ChangeNotifier {
     bannerImages.clear();
     for (BannerModel item in bannerDatas!) {
       bannerImages.add(
-          '${Api.baseUrl}storage/${item.bannerImage}'.replaceAll('api', ''));
+          '${Api.baseUrl}${item.bannerImage}'.replaceAll('api', ''));
     }
     notifyListeners();
   }

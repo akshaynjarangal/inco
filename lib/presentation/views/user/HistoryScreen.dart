@@ -10,17 +10,18 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<UserRedeemedHistoryModel>? products =
-        Provider.of<ProductProvider>(context, listen: false).userRedemedHistory;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appThemeColor,
         centerTitle: true,
-        title: const Text('Redeemed History',
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w700,
-                fontSize: 18)),
+        title: const Text(
+          'Redeemed History',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+            fontSize: 18,
+          ),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -29,11 +30,18 @@ class HistoryScreen extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: products!.length,
+          child: Consumer<ProductProvider>(
+            builder: (context, value, child) {
+              List<UserRedeemedHistoryModel>? products =
+                  value.userRedemedHistory;
+
+              if (products == null || products.isEmpty) {
+                return const Center(
+                  child: Text('No Items Redeemed'),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: products.length,
                   itemBuilder: (BuildContext context, int index) {
                     UserRedeemedHistoryModel product = products[index];
                     return Card(
@@ -48,8 +56,9 @@ class HistoryScreen extends StatelessWidget {
                                   const Text(
                                     'Shipped to:',
                                     style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   Text(product.address),
                                   Text(
@@ -60,10 +69,9 @@ class HistoryScreen extends StatelessWidget {
                                               255, 167, 151, 9)
                                           : product.status == 'shipped'
                                               ? Colors.green
-                                              : Colors
-                                                  .black, // Default color if none of the conditions match
+                                              : Colors.black,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -73,11 +81,12 @@ class HistoryScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.black12,
                               image: DecorationImage(
-                                  image: NetworkImage(
-                                    '${Api.baseUrl}storage/${product.productImage}'
-                                        .replaceAll('api', ''),
-                                  ),
-                                  fit: BoxFit.fill),
+                                image: NetworkImage(
+                                  '${Api.baseUrl}${product.productImage}'
+                                      .replaceAll('api', ''),
+                                ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                             margin: const EdgeInsets.all(5),
                             height: 100,
@@ -87,9 +96,9 @@ class HistoryScreen extends StatelessWidget {
                       ),
                     );
                   },
-                ),
-              ),
-            ],
+                );
+              }
+            },
           ),
         ),
       ),

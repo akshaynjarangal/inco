@@ -29,12 +29,13 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     AuthService.userType = prefs.getString('usertype');
-    print(AuthService.userType);
+   
     if (AuthService.userType == null) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (ctxt) => LoginScreen()));
     } else {
-      if (AuthService.userType == 'user') {
+      try {
+         if (AuthService.userType == 'user') {
         var profileprovider =
             Provider.of<ProfileProvider>(context, listen: false);
         var productprovider =
@@ -55,6 +56,11 @@ class _SplashScreenState extends State<SplashScreen> {
          Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (ctxt) =>  LoginScreen()));
       }
+      } catch (e) {
+         Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (ctxt) =>  LoginScreen()));
+      }
+     
     }
   }
 

@@ -68,7 +68,7 @@ class DeliveryStatusScreen extends StatelessWidget {
                     color: Colors.black12,
                     image: DecorationImage(
                         image: NetworkImage(
-                          '${Api.baseUrl}storage/${details.productImage!}'
+                          '${Api.baseUrl}${details.productImage!}'
                               .replaceAll('api', ''),
                         ),
                         fit: BoxFit.fill),
@@ -92,7 +92,7 @@ class DeliveryStatusScreen extends StatelessWidget {
               valueListenable: isLoading,
               builder: (BuildContext context, dynamic value, Widget? child) {
                 return isLoading.value
-                    ? SizedBox(
+                    ? const SizedBox(
                         height: 30,
                         width: 30,
                         child: CircularProgressIndicator(

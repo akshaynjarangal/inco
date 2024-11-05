@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/constent/endpoints.dart';
@@ -19,7 +18,7 @@ class BannerService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -35,7 +34,7 @@ class BannerService {
       if (response.statusCode == 200) {
         // Assuming the response is a list of products
         List<dynamic> data = response.data;
-        print(data);
+        // print(data);
 
         // Map the response to a list of ProductModel
         List<BannerModel> productList = data
@@ -44,11 +43,11 @@ class BannerService {
 
         return productList;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return null;
     }
   }
@@ -78,21 +77,21 @@ class BannerService {
             },
           ),
         );
-        print(response.data);
+        // print(response.data);
 
         if (response.statusCode == 200) {
-          print('banner image updated successfully');
+          // print('banner image updated successfully');
           return response.data['image'];
         } else {
-          print('Failed to update profile image: ${response.data}');
+          // print('Failed to update profile image: ${response.data}');
           return null;
         }
       } catch (e) {
-        print('Error updating profile image: $e');
+        // print('Error updating profile image: $e');
         return null;
       }
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
       return null;
     }
   }
@@ -103,7 +102,7 @@ class BannerService {
         await AuthService.getToken(); // Replace with your token fetching logic
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -121,11 +120,11 @@ class BannerService {
 
         return true;
       } else {
-        print('Failed to fetch products: ${response.statusCode}');
+        // print('Failed to fetch products: ${response.statusCode}');
         return false;
       }
     } catch (e) {
-      print('Error fetching products: $e');
+      // print('Error fetching products: $e');
       return false;
     }
   }
@@ -158,18 +157,18 @@ class BannerService {
         print(response.data);
 
         if (response.statusCode == 200) {
-          print('banner image updated successfully');
+          // print('banner image updated successfully');
           return response.data['image'];
         } else {
-          print('Failed to update profile image: ${response.data}');
+          // print('Failed to update profile image: ${response.data}');
           return null;
         }
       } catch (e) {
-        print('Error updating profile image: $e');
+        // print('Error updating profile image: $e');
         return null;
       }
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
       return null;
     }
   }
@@ -179,7 +178,7 @@ class BannerService {
     String? token = await AuthService.getToken(); // Fetch the token
 
     if (token == null) {
-      print('Token is missing');
+      // print('Token is missing');
       return null;
     }
 
@@ -203,17 +202,17 @@ class BannerService {
             showNotification(data.newNotification!.message, '');
           }
         } catch (e) {
-          print('cant show notification');
+          // print('cant show notification');
         }
 
         // Return the list of notifications
         return data.notifications;
       } else {
-        print('Failed to fetch notifications: ${response.statusCode}');
+        // print('Failed to fetch notifications: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching notifications: $e');
+      // print('Error fetching notifications: $e');
       return null;
     }
   }
@@ -223,7 +222,7 @@ class BannerService {
     var bigPictureStyleInformation = BigPictureStyleInformation(
       const DrawableResourceAndroidBitmap(
           'ic_launcher'), // Replace this with your app icon
-      largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
+      largeIcon: const DrawableResourceAndroidBitmap('ic_launcher'),
       contentTitle: title,
       summaryText: body,
     );

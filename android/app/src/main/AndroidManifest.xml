@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.READ_SMS"/>
 
     <application
-        android:label="Inco Benefit Points"
+        android:label="INCO Benefit Points"
         android:name="${applicationName}"
         
         android:icon="@mipmap/ic_launcher">

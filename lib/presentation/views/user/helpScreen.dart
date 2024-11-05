@@ -7,6 +7,7 @@ class HelpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mediaqury = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         titleSpacing: -5,
@@ -41,8 +42,8 @@ class HelpScreen extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/images/indu logo.png',
-                    height: 100,
-                    width: 100,
+                    height: mediaqury.width * 0.25,
+                    width: mediaqury.width * 0.25,
                   ),
                   const SizedBox(
                     width: 10,
@@ -52,26 +53,22 @@ class HelpScreen extends StatelessWidget {
                     children: [
                       SizedBox(
                         height: 50,
-                        width: 200,
+                        width: mediaqury.width * 0.6,
                         child: SvgPicture.asset(
                           'assets/images/inco.svg',
                           color:
                               appThemeColor, // Path to your SVG file in assets
                         ),
                       ),
-                      // Text(
-                      //   'INDU COMPONENTS',
-                      //   style: TextStyle(
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 24,
-                      //   ),
-                      // ),
                       const SizedBox(height: 3),
-                      const Text(
-                        "Plot No:20, SIDCO Industrial Park,\nMuchikunnu, Koyilandi, Kerala -\n673307",
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: mediaqury.width * 0.6,
+                        child: const Text(
+                          "Plot No:20, SIDCO Industrial Park,\nMuchukunnu, Koyilandi, Kerala -\n673307",
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],

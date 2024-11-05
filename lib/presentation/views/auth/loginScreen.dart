@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inco/core/constent/colors.dart';
-import 'package:inco/core/utlities/validations.dart';
 import 'package:inco/core/widgets/customeButton.dart';
 import 'package:inco/core/widgets/customeTextfield.dart';
 import 'package:inco/presentation/views/auth/forgotPass.dart';
@@ -36,18 +35,17 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: mediaqry.height * 0.2,
-                ),
-                const Text(
-                  'Login',
-                  style: TextStyle(
-                      color: appThemeColor,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
                   height: mediaqry.height * 0.1,
                 ),
+                Image.asset(
+                  'assets/images/indu logo.png',
+                  height: mediaqry.height * 0.2,
+                  width: mediaqry.width - 40,
+                ),
+                SizedBox(
+                  height: mediaqry.height * 0.03,
+                ),
+              
                 CustomeTextfield(
                   keybordType: TextInputType.emailAddress,
                   prifixicon: Icons.email,
@@ -64,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                     // Regular expression for phone validation (Assuming 10 digits)
                     final phoneRegex = RegExp(r'^\d{10}$');
 
-                    if (!emailRegex.hasMatch(value) && 
+                    if (!emailRegex.hasMatch(value) &&
                         !phoneRegex.hasMatch(value)) {
                       return 'Please enter a valid email or phone number';
                     }
@@ -72,11 +70,9 @@ class LoginScreen extends StatelessWidget {
                     return null; // Return null if validation is successful
                   },
                 ),
-                ValueListenableBuilder(    
-                  
+                ValueListenableBuilder(
                   valueListenable: passwordVisibility,
                   builder: (context, value, child) => CustomeTextfield(
-                    
                     obsecure: passwordVisibility.value,
                     suffixicon: IconButton(
                         onPressed: () {
@@ -121,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                   builder:
                       (BuildContext context, dynamic value, Widget? child) {
                     return isLoading.value
-                        ? SizedBox(
+                        ? const SizedBox(
                             height: 30,
                             width: 30,
                             child: CircularProgressIndicator(

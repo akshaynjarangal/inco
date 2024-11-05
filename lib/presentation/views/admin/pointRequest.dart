@@ -33,7 +33,9 @@ class PointRequestScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<ProductProvider>(
-          builder: (context, value, child) => ListView.builder(
+          builder: (context, value, child) => 
+           value.pointRequestes!.isEmpty||value.pointRequestes==null?const Center(child: Text('No Requestes'),):
+          ListView.builder(
             itemCount: value.pointRequestes!.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
@@ -59,7 +61,7 @@ class PointRequestScreen extends StatelessWidget {
                   leading: CircleAvatar(
                     radius: 30,
                     backgroundImage: NetworkImage(
-                        '${Api.baseUrl}storage/${value.pointRequestes![index].complainant.image!}'
+                        '${Api.baseUrl}${value.pointRequestes![index].complainant.image!}'
                             .replaceAll('api', '')),
                   ),
                 ),

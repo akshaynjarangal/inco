@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:inco/core/constent/colors.dart';
 import 'package:inco/core/constent/endpoints.dart';
 import 'package:inco/core/widgets/drawer.dart';
-import 'package:inco/core/widgets/snackbar.dart';
 import 'package:inco/data/model/progressCountMode.dart';
 import 'package:inco/presentation/views/admin/generateQR.dart';
 import 'package:inco/presentation/views/admin/pointRequest.dart';
@@ -34,7 +32,8 @@ class AdminHomeScreen extends StatelessWidget {
                   SliverAppBar(
                     actions: [
                       IconButton(
-                          onPressed: () {
+                          onPressed: ()async {
+                            await  Provider.of<QrProvider>(context, listen: false).getpdf();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -306,7 +305,7 @@ class AdminHomeScreen extends StatelessWidget {
                                       color: Colors.black12,
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                            '${Api.baseUrl}storage/${product.productImage}'
+                                            '${Api.baseUrl}${product.productImage}'
                                                 .replaceAll('api', ''),
                                           ),
                                           fit: BoxFit.fill),

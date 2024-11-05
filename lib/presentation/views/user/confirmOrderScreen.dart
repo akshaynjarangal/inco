@@ -115,7 +115,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(
-                              '${Api.baseUrl}storage/${product.productImage!}'
+                              '${Api.baseUrl}${product.productImage!}'
                                   .replaceAll('api', ''),
                             ),
                             fit: BoxFit.fill),
@@ -149,7 +149,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                   builder:
                       (BuildContext context, dynamic valuee, Widget? child) {
                     return isLoading.value
-                        ? SizedBox(
+                        ? const SizedBox(
                             height: 30,
                             width: 30,
                             child: CircularProgressIndicator(

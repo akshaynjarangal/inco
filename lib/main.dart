@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inco/presentation/views/auth/splashScreen.dart';
@@ -25,7 +28,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -50,18 +52,29 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BottomNAvigationProvider(),
-
         ),
         ChangeNotifierProvider(create: (_) => ConnectivityProvider()),
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const SplashScreen(),
-      ),
+      child: Platform.isAndroid
+          ? MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(useMaterial3: true),
+              home: const SplashScreen(),
+            )
+          : MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                cupertinoOverrideTheme: CupertinoThemeData(
+                  primaryColor: CupertinoColors.activeBlue,
+                ),
+              ),
+              localizationsDelegates: const [
+                DefaultMaterialLocalizations.delegate,
+                DefaultWidgetsLocalizations.delegate,
+                DefaultCupertinoLocalizations.delegate,
+              ],
+              home: const SplashScreen(),
+            ),
     );
   }
 }

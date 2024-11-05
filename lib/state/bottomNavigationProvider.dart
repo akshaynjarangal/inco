@@ -16,9 +16,10 @@ class BottomNAvigationProvider extends ChangeNotifier {
 
   List<Widget> get pages => _pages;
 
-   screenChange(int index,context) {
+  screenChange(int index, context) async {
     if (index == 1) {
-      Provider.of<ProductProvider>(context, listen: false).userRedemedHistory;
+      await Provider.of<ProductProvider>(context, listen: false)
+          .getUserRedeemHistory();
     }
     _currentIndex = index;
     notifyListeners();

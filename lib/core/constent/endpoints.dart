@@ -1,6 +1,6 @@
 class Api {
   // Base URL for the API
-  static const String baseUrl = 'http://192.168.1.7:8000/api';
+  static const String baseUrl = 'https://www.incoinducomponents.com/api';
 
   // Endpoints
   static const String login = '$baseUrl/login';
@@ -18,24 +18,27 @@ class Api {
   static const String getRedeemHistory = '$baseUrl/user/redeemed/products';
   static const String admingetRedeemedHistory = '$baseUrl/redeem/history';
   static const String admingetRedeemedRequestes = '$baseUrl/redeem/requests';
-   static const String markAsShipped = '$baseUrl/product';
-    static const String getPointRequestes = '$baseUrl/admin/complaints';
-     static const String acceptRequest = '$baseUrl/admin/complaints';
-      static const String repportUser = '$baseUrl/complaint';
-      static const String getAllUser = '$baseUrl/admin/users/all';
-      static const String getSuspendedUser = '$baseUrl/admin/users/suspended';
-      static const String suspendAndActivate = '$baseUrl/toggle-status';
-       static const String changePassword = '$baseUrl/change-password';
-        static const String progressAndCount = '$baseUrl/counts';
-        static const String getBanner = '$baseUrl/get/banners';
-         static const String addBanner = '$baseUrl/create/banner';
-       static const String deleteBanner = '$baseUrl/delete/banner';
-         static const String editBanner = '$baseUrl/edit/banner';
-          static const String sendotp = '$baseUrl/send-otp';
-          static const String gettotalPoints = '$baseUrl/points';
-           static const String getNotifications = '$baseUrl/notifications';
+  static const String markAsShipped = '$baseUrl/product';
+  static const String getPointRequestes = '$baseUrl/admin/complaints';
+  static const String acceptRequest = '$baseUrl/admin/complaints';
+  static const String repportUser = '$baseUrl/complaint';
+  static const String getAllUser = '$baseUrl/admin/users/all';
+  static const String getSuspendedUser = '$baseUrl/admin/users/suspended';
+  static const String suspendAndActivate = '$baseUrl/toggle-status';
+  static const String changePassword = '$baseUrl/change-password';
+  static const String progressAndCount = '$baseUrl/counts';
+  static const String getBanner = '$baseUrl/get/banners';
+  static const String addBanner = '$baseUrl/create/banner';
+  static const String deleteBanner = '$baseUrl/delete/banner';
+  static const String editBanner = '$baseUrl/edit/banner';
+  static const String sendotp = '$baseUrl/send-otp';
+  static const String gettotalPoints = '$baseUrl/points';
+  static const String getNotifications = '$baseUrl/notifications';
+  static const String getQr = '$baseUrl/get-pdf';
+  static const String deleteQr = '$baseUrl/delete/pdf';
+  static const String deleteAllQr = '$baseUrl/deleteAll';
 
   static const String forgotPassword = '$baseUrl/reset-password';
   static const String verifyOtp = '$baseUrl/verify-otp';
-  // static const String changePassword = '$baseUrl/change-password';
+  
 }

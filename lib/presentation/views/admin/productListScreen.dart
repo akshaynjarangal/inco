@@ -41,7 +41,9 @@ class ProductListScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: Consumer<ProductProvider>(
-          builder: (context, value, child) => ListView.builder(
+          builder: (context, value, child) => 
+          value.productList.isEmpty||value.productList.isEmpty?const Center(child: Text('No Products'),):
+          ListView.builder(
             itemCount: value.productList.length,
             itemBuilder: (context, index) {
               return Card(
@@ -51,7 +53,7 @@ class ProductListScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(
-                                '${Api.baseUrl}storage/${value.productList[index].productImage!}'
+                                '${Api.baseUrl}${value.productList[index].productImage!}'
                                     .replaceAll('api', '')),
                             fit: BoxFit.fill),
                         borderRadius: BorderRadius.circular(5),

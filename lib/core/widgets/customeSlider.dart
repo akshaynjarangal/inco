@@ -6,7 +6,8 @@ class CustomCarousel extends StatelessWidget {
   final CarouselSliderController carouselController;
   final ValueNotifier<int> current;
 
-  const CustomCarousel({super.key, 
+  const CustomCarousel({
+    super.key,
     required this.items,
     required this.carouselController,
     required this.current,
@@ -53,7 +54,7 @@ class CustomCarousel extends StatelessWidget {
         ),
         Positioned(
           bottom: 3.0,
-          right: mediaqry.width / 2 - (items.length * 8),
+          right: mediaqry.width / 2 - (items.length * 9),
           child: ValueListenableBuilder(
             valueListenable: current,
             builder: (context, value, child) => Row(
@@ -64,8 +65,8 @@ class CustomCarousel extends StatelessWidget {
                   child: Container(
                     width: 10.0,
                     height: 10.0,
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 4.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: (Theme.of(context).brightness == Brightness.dark

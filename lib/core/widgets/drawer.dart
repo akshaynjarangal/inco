@@ -33,7 +33,7 @@ class CustomeDrawer extends StatelessWidget {
                             radius: 40,
                             backgroundImage: user!.profile != null
                                 ? NetworkImage(
-                                    '${Api.baseUrl}storage/${user.profile}'
+                                    '${Api.baseUrl}${user.profile}'
                                         .replaceAll('api', ''),
                                   )
                                 : const AssetImage('assets/images/person.jpg'),
@@ -93,7 +93,6 @@ class CustomeDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () async {
-                    print('object');
                     await Provider.of<BannerProvider>(context, listen: false)
                         .getBanners();
                     Navigator.push(
@@ -131,9 +130,9 @@ class CustomeDrawer extends StatelessWidget {
               ],
             ),
           ListTile(
-            onTap: () {
+            onTap: () async {
               AuthService auth = AuthService();
-              auth.logout(context);
+              await auth.logout(context);
             },
             title: const Text('Log Out'),
             leading: const Icon(Icons.logout_sharp),

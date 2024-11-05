@@ -71,6 +71,7 @@ class UserHomeScreen extends StatelessWidget {
             ];
           },
           body: RefreshIndicator(
+            color: appThemeColor,
             onRefresh: () async {
               var profileprovider =
                   Provider.of<ProfileProvider>(context, listen: false);
@@ -254,12 +255,10 @@ class UserHomeScreen extends StatelessWidget {
                                       Expanded(
                                         child: MaterialButton(
                                           onPressed: () async {
-                                            await Provider.of<BannerProvider>(
-                                                    context,
+                                            Provider.of<BannerProvider>(context,
                                                     listen: false)
                                                 .getNotifications(true);
-                                            await Provider.of<BannerProvider>(
-                                                    context,
+                                            Provider.of<BannerProvider>(context,
                                                     listen: false)
                                                 .getUserTotalPoint();
                                             Navigator.of(contextt)
@@ -286,13 +285,13 @@ class UserHomeScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Scan Now',
                                         style: TextStyle(
                                             color: Colors.black,
@@ -301,13 +300,13 @@ class UserHomeScreen extends StatelessWidget {
                                       ),
                                       SizedBox(
                                         width: mediaqry.width * 0.5,
-                                        child: Divider(
+                                        child: const Divider(
                                           thickness: 1,
                                           height: 1,
                                           color: Colors.grey,
                                         ),
                                       ),
-                                      Text(
+                                      const Text(
                                         'Scan QR to get points',
                                         style: TextStyle(
                                             color: Colors.grey, fontSize: 17),
@@ -341,9 +340,9 @@ class UserHomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Consumer<BannerProvider>(
+                  Consumer<ProductProvider>(
                     builder: (context, value, child) => SliverToBoxAdapter(
-                      child: Container(
+                      child: SizedBox(
                         height: mediaqry.height *
                             0.2, // Adjust the height to fit the items properly
                         child: ListView.builder(
@@ -371,8 +370,10 @@ class UserHomeScreen extends StatelessWidget {
                                     phone: user.phone,
                                   ),
                                 );
-
-                                if (int.parse(value.userTotalPoint ?? '0') >=
+                                var point = Provider.of<BannerProvider>(context,
+                                        listen: false)
+                                    .userTotalPoint;
+                                if (int.parse(point ?? '0') >=
                                     int.parse(product.point!)) {
                                   Navigator.push(
                                     context,
@@ -396,7 +397,7 @@ class UserHomeScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: NetworkImage(
-                                            '${Api.baseUrl}storage/${product.productImage!}'
+                                            '${Api.baseUrl}${product.productImage!}'
                                                 .replaceAll('api', ''),
                                           ),
                                           fit: BoxFit.fill,
@@ -406,30 +407,7 @@ class UserHomeScreen extends StatelessWidget {
                                       ),
                                       margin: const EdgeInsets.all(5),
                                       height: mediaqry.height * 0.2,
-                                      width: 150,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          product.point!,
-                                          style: const TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          product.productInfo!,
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
+                                      width: mediaqry.width * 0.5,
                                     ),
                                   ],
                                 ),

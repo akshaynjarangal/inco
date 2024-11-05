@@ -33,16 +33,16 @@ class AuthService {
 
       // Make POST request using Dio
       Response response = await dio.post(Api.login, data: credentials);
-      print('ddd');
-      print(response.statusCode);
+
+      // print(response.statusCode);
       // Check if login was successful (e.g., 200 OK)
       try {
         if (response.statusCode == 200 || response.statusCode == 201) {
-          print(response.data);
+          // print(response.data);
           // Extract token from the response (assuming it's in a field 'token')
           String? token = response.data['token'];
           String? type = response.data['user']['role'];
-          print(token);
+          // print(token);
           print(response.data);
           // Store token in SharedPreferences
           SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,24 +50,28 @@ class AuthService {
           await prefs.setString('usertype', type!);
           userType = type;
 
-          print('Login successful! Token saved.');
+          // print('Login successful! Token saved.');
           // snackbarWidget(context, response.data['message'], Colors.green);
           // await Provider.of<ProfileProvider>(context).fetchProfile();
           if (userType == 'user') {
-            var profileprovider =
-                Provider.of<ProfileProvider>(context, listen: false);
-            var productprovider =
-                Provider.of<ProductProvider>(context, listen: false);
-            await Provider.of<BannerProvider>(context, listen: false)
-                .getBanners();
-            await Provider.of<BannerProvider>(context, listen: false)
-                .getUserTotalPoint();
-            await profileprovider.fetchProfile();
-            await productprovider.fetchProducts();
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (ctxt) => const BottomNavigationBarScreen()));
+            try {
+              var profileprovider =
+                  Provider.of<ProfileProvider>(context, listen: false);
+              var productprovider =
+                  Provider.of<ProductProvider>(context, listen: false);
+              await Provider.of<BannerProvider>(context, listen: false)
+                  .getBanners();
+              await Provider.of<BannerProvider>(context, listen: false)
+                  .getUserTotalPoint();
+              await profileprovider.fetchProfile();
+              await productprovider.fetchProducts();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (ctxt) => const BottomNavigationBarScreen()));
+            } catch (e) {
+              snackbarWidget(context, 'Error. try again', Colors.red);
+            }
           } else {
             await Provider.of<ProductProvider>(context, listen: false)
                 .getProgressAndCount();
@@ -76,13 +80,14 @@ class AuthService {
           }
         } else {
           snackbarWidget(context, response.data['message'], Colors.red);
-          print('Login failed: ${response.data['message']}');
+          // print('Login failed: ${response.data['message']}');
         }
       } catch (e) {
+        // print(e);
         snackbarWidget(context, response.data['message'], Colors.red);
       }
     } catch (e) {
-      print('Error during login: $e');
+      // print('Error during login: $e');
       snackbarWidget(context, 'Somthing went wrong!', Colors.red);
     }
   }
@@ -101,15 +106,15 @@ class AuthService {
       try {
         dio.options.headers['Authorization'] = 'Bearer $token';
         Response response = await dio.get(Api.userProfile);
-        print('Data fetched successfully: ${response.data}');
+        // print('Data fetched successfully: ${response.data}');
         UserModel user = UserModel.fromJson(response.data);
         return user;
       } catch (e) {
-        print('Error fetching data: $e');
+        // print('Error fetching data: $e');
         return null; // Return null in case of error
-      }
+      } 
     } else {
-      print('No token found, please login.');
+      // print('No token found, please login.');
       return null; // Return null if no token is found
     }
   }
@@ -128,7 +133,7 @@ class AuthService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         String message = response.data['message'];
         if (response.data['status'] == 'success') {
-          print('Registration successful: ${response.data}');
+          // print('Registration successful: ${response.data}');
           snackbarWidget(context, message, Colors.green);
           Navigator.pushAndRemoveUntil(
             context,
@@ -142,38 +147,37 @@ class AuthService {
         // Registration successful
       } else {
         // Registration failed
-        print('Registration failed: ${response.data['message']}');
+        // print('Registration failed: ${response.data['message']}');
         snackbarWidget(context, 'Registration failed', Colors.red);
       }
     } catch (e) {
-      print('Error during registration: $e');
+      // print('Error during registration: $e');
       snackbarWidget(context, 'Registration failed', Colors.red);
     }
   }
 
   // Forgot password function
-  Future<bool> sendOtpToMobile(String mobile, context) async {
+  Future<bool> sendOtpToMobile(String mobile, context, bool val) async {
     try {
       // Prepare data
-      Map<String, dynamic> emailData = {
-        'phone': mobile,
-      };
+      Map<String, dynamic> emailData = {'phone': mobile, 'value': val};
 
       // Send a POST request to forgot password endpoint
       Response response = await dio.post(Api.sendotp, data: emailData);
 
       // Check if the request was successful
-      if (response.statusCode == 200) {
-        print('Password reset email sent successfully.');
-        snackbarWidget(context, 'OTP send to Mobile', Colors.black);
+      if (response.statusCode == 200 && response.data['status'] == 'success') {
+        // print('Password reset email sent successfully.');
+
+        snackbarWidget(context, response.data['message'], Colors.black);
         return true;
       } else {
-        print('Failed to send reset email: ${response.data['message']}');
-        snackbarWidget(context, 'can\'t find user', Colors.black);
+        // print('Failed to send reset email: ${response.data['message']}');
+        snackbarWidget(context, response.data['message'], Colors.black);
         return false;
       }
     } catch (e) {
-      print('Error during sending reset email: $e');
+      // print('Error during sending reset email: $e');
       snackbarWidget(context, 'Error sending OTP', Colors.black);
       return false;
     }
@@ -192,14 +196,14 @@ class AuthService {
       Response response = await dio.post(Api.verifyOtp, data: otpData);
 
       if (response.statusCode == 200 && response.data['status'] == 'success') {
-        print('OTP verification successful: ${response.data}');
+        // print('OTP verification successful: ${response.data}');
         return true;
       } else {
-        print('OTP verification failed: ${response.data['message']}');
+        // print('OTP verification failed: ${response.data['message']}');
         return false;
       }
     } catch (e) {
-      print('Error during OTP verification: $e');
+      // print('Error during OTP verification: $e');
       return false;
     }
   }
@@ -209,7 +213,7 @@ class AuthService {
     try {
       // Prepare data for password change
       Map<String, dynamic> passwordData = {
-        'phone': '$phone',
+        'phone': phone,
         'new_password': newPassword,
       };
 
@@ -218,7 +222,7 @@ class AuthService {
           await dio.post(Api.forgotPassword, data: passwordData);
 
       if (response.statusCode == 200 && response.data['status'] == 'success') {
-        print('Password changed successfully');
+        // print('Password changed successfully');
         snackbarWidget(context, 'Password Updated', Colors.green);
         Navigator.pushAndRemoveUntil(
           context,
@@ -227,10 +231,10 @@ class AuthService {
               false, // This will remove all previous routes
         );
       } else {
-        print('Password change failed: ${response.data['message']}');
+        // print('Password change failed: ${response.data['message']}');
       }
     } catch (e) {
-      print('Error during password change: $e');
+      // print('Error during password change: $e');
     }
   }
 
@@ -242,38 +246,54 @@ class AuthService {
 
     if (token != null) {
       try {
-        // Set Authorization header
-        dio.options.headers['Authorization'] = 'Bearer $token';
-
-        // Call logout API (make sure you have a valid API endpoint for logout)
-        Response response = await dio.post(
-          Api.logout, // Your API endpoint for logout
+        // Display loading dialog
+        showDialog(
+          context: context,
+          barrierDismissible:
+              false, // Prevents closing the dialog by tapping outside
+          builder: (context) => const AlertDialog(
+            backgroundColor: Color.fromARGB(166, 255, 255, 255),
+            content: Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text('Logging Out...'),
+              ],
+            ),
+          ),
         );
 
-        if (response.statusCode == 200) {
-          // Logout was successful
+        dio.options.headers['Authorization'] = 'Bearer $token';
+        Response response =
+            await dio.post(Api.logout); // Your API endpoint for logout
 
-          // Clear token or any user data locally (e.g., SharedPreferences)
+        Navigator.pop(context); // Close the loading dialog
+
+        if (response.statusCode == 200) {
+          // Clear token or any user data locally
           await AuthService
               .clearToken(); // Assuming you have a function to clear the token
 
           // Optionally navigate the user to the login screen
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (ctxt) => LoginScreen()));
+            context,
+            MaterialPageRoute(builder: (ctxt) => LoginScreen()),
+          );
 
           return true;
         } else {
-          // Failed to logout
-          print('Failed to logout: ${response.data}');
+          // Handle failed logout response
+          // print('Failed to logout: ${response.data}');
           return false;
         }
       } catch (e) {
         // Handle error
-        print('Error during logout: $e');
+        Navigator.pop(context); // Ensure dialog is closed on error
+        // print('Error during logout: $e');
         return false;
       }
     } else {
-      print('No token found, unable to logout.');
+      // print('No token found, unable to logout.');
       return false;
     }
   }

@@ -178,18 +178,18 @@ Widget buildUserCard(BuildContext context, List<UserModel> users, index) {
             leading: CircleAvatar(
               backgroundImage: user.profile != null
                   ? NetworkImage(
-                      '${Api.baseUrl}storage/${user.profile!}'
+                      '${Api.baseUrl}${user.profile!}'
                           .replaceAll('api', ''),
                     )
                   : const AssetImage('assets/images/person.jpg'),
               radius: 30,
             ),
             title: Text(user.name ?? "",
-                style: TextStyle(fontWeight: FontWeight.bold)),
+                style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(
               '${user.point ?? ""} points',
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                  const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
             ),
             trailing: const Icon(Icons.arrow_forward_ios_sharp, size: 15),
           ),

@@ -30,7 +30,9 @@ class ProductHistoryScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
+        child: 
+        history.isEmpty||history.isEmpty ?const Center(child: Text('No Items'),):
+        ListView.builder(
           itemCount: history.length,
           itemBuilder: (BuildContext context, int index) {
             AdminRedeemedHistoryModel product = history[index];
@@ -43,7 +45,7 @@ class ProductHistoryScreen extends StatelessWidget {
                       color: Colors.black12,
                       image: DecorationImage(
                           image: NetworkImage(
-                            '${Api.baseUrl}storage/${product.productImage!}'
+                            '${Api.baseUrl}${product.productImage!}'
                                 .replaceAll('api', ''),
                           ),
                           fit: BoxFit.fill),

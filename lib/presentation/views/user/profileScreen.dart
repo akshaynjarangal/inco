@@ -50,9 +50,10 @@ class _MyAccountPageState extends State<MyAccountPage> {
                 icon: const Icon(Icons.edit, color: Colors.black),
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EditProfileScreen())).then((_) {
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EditProfileScreen()))
+                      .then((_) {
                     // Refetch the profile when returning from the edit screen
                     if (AuthService.userType != 'admin') {
                       Provider.of<ProfileProvider>(context, listen: false)
@@ -83,13 +84,14 @@ class _MyAccountPageState extends State<MyAccountPage> {
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundImage:
-                                value.currentUserProfileData!.profile == null
-                                    ? const AssetImage('assets/images/person.jpg')
-                                    : NetworkImage(
-                                        '${Api.baseUrl}storage/${value.currentUserProfileData!.profile!}'
-                                            .replaceAll('api', ''),
-                                      ),
+                            backgroundImage: value
+                                        .currentUserProfileData!.profile ==
+                                    null
+                                ? const AssetImage('assets/images/person.jpg')
+                                : NetworkImage(
+                                    '${Api.baseUrl}${value.currentUserProfileData!.profile!}'
+                                        .replaceAll('api', ''),
+                                  ),
                           ),
                           if (AuthService.userType != 'admin')
                             Positioned(
@@ -301,7 +303,8 @@ class _MyAccountPageState extends State<MyAccountPage> {
               alignment: Alignment.centerLeft,
               child: Text(
                 value,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
               ),
             ),
           ),
